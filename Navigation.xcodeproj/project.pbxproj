@@ -8,22 +8,34 @@
 
 /* Begin PBXBuildFile section */
 		FFD044972954C5DA00643070 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFD044962954C5DA00643070 /* AppDelegate.swift */; };
-		FFD044992954C5DA00643070 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFD044982954C5DA00643070 /* SceneDelegate.swift */; };
 		FFD0449B2954C5DA00643070 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFD0449A2954C5DA00643070 /* ViewController.swift */; };
-		FFD0449E2954C5DA00643070 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FFD0449C2954C5DA00643070 /* Main.storyboard */; };
 		FFD044A02954C5DB00643070 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FFD0449F2954C5DB00643070 /* Assets.xcassets */; };
 		FFD044A32954C5DB00643070 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FFD044A12954C5DB00643070 /* LaunchScreen.storyboard */; };
+		FFD044AC2954CCF500643070 /* FeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFD044AB2954CCF500643070 /* FeedViewController.swift */; };
+		FFD044AE2954CD1B00643070 /* PostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFD044AD2954CD1B00643070 /* PostViewController.swift */; };
+		FFD044B32954CD7400643070 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFD044B22954CD7400643070 /* ProfileViewController.swift */; };
+		FFD044B62954CDC000643070 /* PostModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFD044B52954CDC000643070 /* PostModel.swift */; };
+		FFD044B92954CE8100643070 /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFD044B82954CE8100643070 /* InfoViewController.swift */; };
+		FFD044BC2954CF6300643070 /* ProfileHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFD044BB2954CF6300643070 /* ProfileHeaderView.swift */; };
+		FFD044BE2954CF9700643070 /* StatusTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFD044BD2954CF9700643070 /* StatusTextField.swift */; };
+		FFD044C02954CFB600643070 /* StatusButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFD044BF2954CFB600643070 /* StatusButton.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		FFD044932954C5DA00643070 /* Navigation.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Navigation.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FFD044962954C5DA00643070 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		FFD044982954C5DA00643070 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		FFD0449A2954C5DA00643070 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		FFD0449D2954C5DA00643070 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		FFD0449F2954C5DB00643070 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FFD044A22954C5DB00643070 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		FFD044A42954C5DB00643070 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FFD044AB2954CCF500643070 /* FeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewController.swift; sourceTree = "<group>"; };
+		FFD044AD2954CD1B00643070 /* PostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostViewController.swift; sourceTree = "<group>"; };
+		FFD044B22954CD7400643070 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		FFD044B52954CDC000643070 /* PostModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostModel.swift; sourceTree = "<group>"; };
+		FFD044B82954CE8100643070 /* InfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
+		FFD044BB2954CF6300643070 /* ProfileHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeaderView.swift; sourceTree = "<group>"; };
+		FFD044BD2954CF9700643070 /* StatusTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusTextField.swift; sourceTree = "<group>"; };
+		FFD044BF2954CFB600643070 /* StatusButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,14 +69,84 @@
 			isa = PBXGroup;
 			children = (
 				FFD044962954C5DA00643070 /* AppDelegate.swift */,
-				FFD044982954C5DA00643070 /* SceneDelegate.swift */,
+				FFD044AA2954CCBE00643070 /* ViewControllers */,
+				FFD044B42954CDB100643070 /* Model */,
+				FFD044C12954D16500643070 /* Helpers */,
+			);
+			path = Navigation;
+			sourceTree = "<group>";
+		};
+		FFD044AA2954CCBE00643070 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
 				FFD0449A2954C5DA00643070 /* ViewController.swift */,
-				FFD0449C2954C5DA00643070 /* Main.storyboard */,
+				FFD044B72954CE6400643070 /* InfoViewController */,
+				FFD044B12954CD5F00643070 /* ProfileViewController */,
+				FFD044AF2954CD3700643070 /* FeedViewController */,
+				FFD044B02954CD4400643070 /* PostViewController */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		FFD044AF2954CD3700643070 /* FeedViewController */ = {
+			isa = PBXGroup;
+			children = (
+				FFD044AB2954CCF500643070 /* FeedViewController.swift */,
+			);
+			path = FeedViewController;
+			sourceTree = "<group>";
+		};
+		FFD044B02954CD4400643070 /* PostViewController */ = {
+			isa = PBXGroup;
+			children = (
+				FFD044AD2954CD1B00643070 /* PostViewController.swift */,
+			);
+			path = PostViewController;
+			sourceTree = "<group>";
+		};
+		FFD044B12954CD5F00643070 /* ProfileViewController */ = {
+			isa = PBXGroup;
+			children = (
+				FFD044B22954CD7400643070 /* ProfileViewController.swift */,
+				FFD044BA2954CF5200643070 /* Components */,
+			);
+			path = ProfileViewController;
+			sourceTree = "<group>";
+		};
+		FFD044B42954CDB100643070 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				FFD044B52954CDC000643070 /* PostModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		FFD044B72954CE6400643070 /* InfoViewController */ = {
+			isa = PBXGroup;
+			children = (
+				FFD044B82954CE8100643070 /* InfoViewController.swift */,
+			);
+			path = InfoViewController;
+			sourceTree = "<group>";
+		};
+		FFD044BA2954CF5200643070 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				FFD044BB2954CF6300643070 /* ProfileHeaderView.swift */,
+				FFD044BD2954CF9700643070 /* StatusTextField.swift */,
+				FFD044BF2954CFB600643070 /* StatusButton.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		FFD044C12954D16500643070 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
 				FFD0449F2954C5DB00643070 /* Assets.xcassets */,
 				FFD044A12954C5DB00643070 /* LaunchScreen.storyboard */,
 				FFD044A42954C5DB00643070 /* Info.plist */,
 			);
-			path = Navigation;
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -127,7 +209,6 @@
 			files = (
 				FFD044A32954C5DB00643070 /* LaunchScreen.storyboard in Resources */,
 				FFD044A02954C5DB00643070 /* Assets.xcassets in Resources */,
-				FFD0449E2954C5DA00643070 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -138,23 +219,22 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FFD044BE2954CF9700643070 /* StatusTextField.swift in Sources */,
+				FFD044AE2954CD1B00643070 /* PostViewController.swift in Sources */,
+				FFD044B62954CDC000643070 /* PostModel.swift in Sources */,
+				FFD044C02954CFB600643070 /* StatusButton.swift in Sources */,
 				FFD0449B2954C5DA00643070 /* ViewController.swift in Sources */,
+				FFD044B92954CE8100643070 /* InfoViewController.swift in Sources */,
+				FFD044B32954CD7400643070 /* ProfileViewController.swift in Sources */,
+				FFD044AC2954CCF500643070 /* FeedViewController.swift in Sources */,
 				FFD044972954C5DA00643070 /* AppDelegate.swift in Sources */,
-				FFD044992954C5DA00643070 /* SceneDelegate.swift in Sources */,
+				FFD044BC2954CF6300643070 /* ProfileHeaderView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		FFD0449C2954C5DA00643070 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				FFD0449D2954C5DA00643070 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		FFD044A12954C5DB00643070 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -288,10 +368,9 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Navigation/Info.plist;
+				INFOPLIST_FILE = Navigation/Helpers/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -315,10 +394,9 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Navigation/Info.plist;
+				INFOPLIST_FILE = Navigation/Helpers/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
