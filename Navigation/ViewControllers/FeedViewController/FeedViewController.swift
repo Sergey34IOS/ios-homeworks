@@ -19,47 +19,12 @@ final class FeedViewController: UIViewController {
         setup()
     }
     
-    private func setupNavigationVc() {
-        title = "Лента"
-        let appearance = UINavigationBarAppearance()
-        appearance.configureWithOpaqueBackground()
-        appearance.titleTextAttributes = [
-            .foregroundColor: UIColor.white
-        ]
-        appearance.backgroundColor = .gray
-        navigationController?.navigationBar.standardAppearance = appearance
-        navigationController?.navigationBar.scrollEdgeAppearance = appearance
+    @objc
+    private func someAction() {
+        let vc = PostViewController(text: post.title)
+        navigationController?.pushViewController(vc, animated: true)
     }
-    
-    //    private lazy var button: UIButton = {
-    //        let button = UIButton()
-    //        button.backgroundColor = .orange
-    //        button.layer.cornerRadius = 10
-    //        button.setTitle("Show post", for: .normal)
-    //        button.setTitleColor(.black, for: .normal)
-    //        button.addTarget(self, action: #selector(someAction), for: .touchUpInside)
-    //        return button
-    //    }()
-    //
-    
-        @objc
-        private func someAction() {
-            let vc = PostViewController(text: post.title)
-            navigationController?.pushViewController(vc, animated: true)
-        }
-    
 }
-            
-//        view.addSubview(button)
-//
-//        button.translatesAutoresizingMaskIntoConstraints = false
-//
-//        NSLayoutConstraint.activate([
-//            button.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-//            button.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-//            button.widthAnchor.constraint(equalToConstant: 200),
-//            button.heightAnchor.constraint(equalToConstant: 50)
-//        ])
 
 extension FeedViewController {
     
@@ -72,8 +37,10 @@ extension FeedViewController {
         stackView.alignment = .center
         stackView.spacing = 10
         
-        
         view.addSubview(stackView)
+        stackView.addArrangedSubview(firstButton)
+        stackView.addArrangedSubview(secondButton)
+        
         stackView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
@@ -83,9 +50,6 @@ extension FeedViewController {
             stackView.heightAnchor.constraint(equalToConstant: 50)]
         )
         
-        
-        stackView.addArrangedSubview(firstButton)
-        stackView.addArrangedSubview(secondButton)
         firstButton.setTitle("Кнопка раз", for: .normal)
         firstButton.backgroundColor = .orange
         
@@ -93,6 +57,17 @@ extension FeedViewController {
         secondButton.backgroundColor = .systemMint
         [firstButton, secondButton].forEach {$0.addTarget(self, action: #selector(someAction), for: .touchUpInside)
         }
-        
+    }
+    
+    private func setupNavigationVc() {
+        title = "Лента"
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithOpaqueBackground()
+        appearance.titleTextAttributes = [
+            .foregroundColor: UIColor.white
+        ]
+        appearance.backgroundColor = .gray
+        navigationController?.navigationBar.standardAppearance = appearance
+        navigationController?.navigationBar.scrollEdgeAppearance = appearance
     }
 }
