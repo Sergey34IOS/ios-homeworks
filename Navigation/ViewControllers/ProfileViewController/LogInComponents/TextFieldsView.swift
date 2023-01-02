@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class TextFieldsView: UIScrollView {
+final class TextFieldsView: UIView {
     
     private let separatorView = UIView()
     private let emailPhoneTextField = LogInTextField(placeholderText: "Phone or email")

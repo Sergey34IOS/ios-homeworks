@@ -51,7 +51,7 @@ extension ProfileViewController {
             footerButton.heightAnchor.constraint(equalToConstant: 50),
             footerButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
-
+        
     }
     
     private func setupNavigationVc() {
@@ -59,7 +59,7 @@ extension ProfileViewController {
         let appearance = UINavigationBarAppearance()
         appearance.configureWithOpaqueBackground()
         appearance.titleTextAttributes = [
-         .foregroundColor: UIColor.white
+            .foregroundColor: UIColor.white
         ]
         appearance.backgroundColor = .systemMint
         navigationController?.navigationBar.standardAppearance = appearance
@@ -68,4 +68,4 @@ extension ProfileViewController {
 }
 
 
-            
+

@@ -23,12 +23,12 @@ class LogInViewController: UIViewController {
         logInButton.addTarget(self, action: #selector(logInAction), for: .touchUpInside)
         return logInButton
     }()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setup()
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
-
+        
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
@@ -38,7 +38,7 @@ class LogInViewController: UIViewController {
             view.frame.origin.y = -keyboardHeight
         }
     }
-
+    
     @objc
     func keyboardWillHide(notification: Notification) {
         view.frame.origin.y = 0
@@ -53,7 +53,7 @@ class LogInViewController: UIViewController {
     @objc private func dismissKeyboarFrame() {
         view.endEditing(true)
     }
-
+    
     func setup() {
         setupGesture()
         view.addSubview(logoImage)
