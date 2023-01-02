@@ -55,3 +55,5 @@ extension StatusTextField {
         text = "Enter status..."
     }
 }
+
+// textfield.isSecure

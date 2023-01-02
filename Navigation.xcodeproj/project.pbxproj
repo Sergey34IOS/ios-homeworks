@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1A2138752963106400CBE869 /* TextFieldsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A2138742963106400CBE869 /* TextFieldsView.swift */; };
+		1A213877296310F200CBE869 /* LoginTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A213876296310F200CBE869 /* LoginTextField.swift */; };
+		1A4D3CE3295B13E2006F06D9 /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4D3CE2295B13E2006F06D9 /* LogInViewController.swift */; };
 		FFD044972954C5DA00643070 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFD044962954C5DA00643070 /* AppDelegate.swift */; };
 		FFD044A02954C5DB00643070 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FFD0449F2954C5DB00643070 /* Assets.xcassets */; };
 		FFD044A32954C5DB00643070 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FFD044A12954C5DB00643070 /* LaunchScreen.storyboard */; };
@@ -21,6 +24,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1A2138742963106400CBE869 /* TextFieldsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldsView.swift; sourceTree = "<group>"; };
+		1A213876296310F200CBE869 /* LoginTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginTextField.swift; sourceTree = "<group>"; };
+		1A4D3CE2295B13E2006F06D9 /* LogInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
 		FFD044932954C5DA00643070 /* Navigation.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Navigation.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FFD044962954C5DA00643070 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FFD0449F2954C5DB00643070 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -47,6 +53,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1A4D3CE4295E2CE9006F06D9 /* LogInComponents */ = {
+			isa = PBXGroup;
+			children = (
+				1A4D3CE2295B13E2006F06D9 /* LogInViewController.swift */,
+				1A2138742963106400CBE869 /* TextFieldsView.swift */,
+				1A213876296310F200CBE869 /* LoginTextField.swift */,
+			);
+			path = LogInComponents;
+			sourceTree = "<group>";
+		};
 		FFD0448A2954C5DA00643070 = {
 			isa = PBXGroup;
 			children = (
@@ -105,7 +121,8 @@
 			isa = PBXGroup;
 			children = (
 				FFD044B22954CD7400643070 /* ProfileViewController.swift */,
-				FFD044BA2954CF5200643070 /* Components */,
+				1A4D3CE4295E2CE9006F06D9 /* LogInComponents */,
+				FFD044BA2954CF5200643070 /* ProfileComponents */,
 			);
 			path = ProfileViewController;
 			sourceTree = "<group>";
@@ -126,14 +143,14 @@
 			path = InfoViewController;
 			sourceTree = "<group>";
 		};
-		FFD044BA2954CF5200643070 /* Components */ = {
+		FFD044BA2954CF5200643070 /* ProfileComponents */ = {
 			isa = PBXGroup;
 			children = (
 				FFD044BB2954CF6300643070 /* ProfileHeaderView.swift */,
 				FFD044BD2954CF9700643070 /* StatusTextField.swift */,
 				FFD044BF2954CFB600643070 /* StatusButton.swift */,
 			);
-			path = Components;
+			path = ProfileComponents;
 			sourceTree = "<group>";
 		};
 		FFD044C12954D16500643070 /* Helpers */ = {
@@ -217,13 +234,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				FFD044BE2954CF9700643070 /* StatusTextField.swift in Sources */,
+				1A213877296310F200CBE869 /* LoginTextField.swift in Sources */,
 				FFD044AE2954CD1B00643070 /* PostViewController.swift in Sources */,
+				1A2138752963106400CBE869 /* TextFieldsView.swift in Sources */,
 				FFD044B62954CDC000643070 /* PostModel.swift in Sources */,
 				FFD044C02954CFB600643070 /* StatusButton.swift in Sources */,
 				FFD044B92954CE8100643070 /* InfoViewController.swift in Sources */,
 				FFD044B32954CD7400643070 /* ProfileViewController.swift in Sources */,
 				FFD044AC2954CCF500643070 /* FeedViewController.swift in Sources */,
 				FFD044972954C5DA00643070 /* AppDelegate.swift in Sources */,
+				1A4D3CE3295B13E2006F06D9 /* LogInViewController.swift in Sources */,
 				FFD044BC2954CF6300643070 /* ProfileHeaderView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

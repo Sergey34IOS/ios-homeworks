@@ -15,6 +15,7 @@ final class ProfileViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .white
         setup()
     }
     
@@ -58,15 +59,13 @@ extension ProfileViewController {
         let appearance = UINavigationBarAppearance()
         appearance.configureWithOpaqueBackground()
         appearance.titleTextAttributes = [
-            .foregroundColor: UIColor.white
+         .foregroundColor: UIColor.white
         ]
-        appearance.backgroundColor = .gray
+        appearance.backgroundColor = .systemMint
         navigationController?.navigationBar.standardAppearance = appearance
         navigationController?.navigationBar.scrollEdgeAppearance = appearance
     }
 }
 
-
-            
 
             
