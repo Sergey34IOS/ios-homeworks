@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1A2138752963106400CBE869 /* TextFieldsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A2138742963106400CBE869 /* TextFieldsView.swift */; };
-		1A213877296310F200CBE869 /* LoginTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A213876296310F200CBE869 /* LoginTextField.swift */; };
 		1A4D3CE3295B13E2006F06D9 /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4D3CE2295B13E2006F06D9 /* LogInViewController.swift */; };
 		FFD044972954C5DA00643070 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFD044962954C5DA00643070 /* AppDelegate.swift */; };
 		FFD044A02954C5DB00643070 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FFD0449F2954C5DB00643070 /* Assets.xcassets */; };
@@ -24,8 +22,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		1A2138742963106400CBE869 /* TextFieldsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldsView.swift; sourceTree = "<group>"; };
-		1A213876296310F200CBE869 /* LoginTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginTextField.swift; sourceTree = "<group>"; };
 		1A4D3CE2295B13E2006F06D9 /* LogInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
 		FFD044932954C5DA00643070 /* Navigation.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Navigation.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FFD044962954C5DA00643070 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -57,8 +53,6 @@
 			isa = PBXGroup;
 			children = (
 				1A4D3CE2295B13E2006F06D9 /* LogInViewController.swift */,
-				1A2138742963106400CBE869 /* TextFieldsView.swift */,
-				1A213876296310F200CBE869 /* LoginTextField.swift */,
 			);
 			path = LogInComponents;
 			sourceTree = "<group>";
@@ -234,9 +228,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FFD044BE2954CF9700643070 /* StatusTextField.swift in Sources */,
-				1A213877296310F200CBE869 /* LoginTextField.swift in Sources */,
 				FFD044AE2954CD1B00643070 /* PostViewController.swift in Sources */,
-				1A2138752963106400CBE869 /* TextFieldsView.swift in Sources */,
 				FFD044B62954CDC000643070 /* PostModel.swift in Sources */,
 				FFD044C02954CFB600643070 /* StatusButton.swift in Sources */,
 				FFD044B92954CE8100643070 /* InfoViewController.swift in Sources */,
