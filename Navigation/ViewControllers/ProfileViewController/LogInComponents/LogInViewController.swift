@@ -7,14 +7,13 @@
 
 import UIKit
 
-class LogInViewController: UIViewController {
+final class LogInViewController: UIViewController {
     
-    private let logoImage: UIImageView = {
-        let logoImage = UIImageView(image: UIImage(named: "logo"))
-        return logoImage
-    }()
+    private let logoImage = UIImageView(image: UIImage(named: "logo"))
+    
     private let textFieldsView = TextFieldsView()
-    private (set) lazy var logInButton: UIButton = {
+    
+    private lazy var logInButton: UIButton = {
         let logInButton = UIButton()
         logInButton.setTitle("Log in", for: .normal)
         logInButton.setTitleColor(.white, for: .normal)
@@ -26,8 +25,10 @@ class LogInViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setup()
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        setupElements()
+        setupNotifications()
+    }
+    private func setupNotifications() {        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
@@ -47,21 +48,21 @@ class LogInViewController: UIViewController {
     @objc
     private func logInAction() {
         let vc = ProfileViewController()
-        present(vc, animated: true)
+        navigationController?.pushViewController(vc, animated: true)
     }
     
     @objc private func dismissKeyboarFrame() {
         view.endEditing(true)
     }
     
-    func setup() {
-        setupGesture()
+    func setupElements() {
         view.addSubview(logoImage)
         view.addSubview(textFieldsView)
         view.addSubview(logInButton)
         logoImage.translatesAutoresizingMaskIntoConstraints = false
         textFieldsView.translatesAutoresizingMaskIntoConstraints = false
         logInButton.translatesAutoresizingMaskIntoConstraints = false
+        setupGesture()
         
         NSLayoutConstraint.activate([
             logoImage.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 120),
@@ -87,3 +88,108 @@ class LogInViewController: UIViewController {
         gesture.addTarget(self, action: #selector(dismissKeyboarFrame))
     }
 }
+
+final class TextFieldsView: UIView {
+    
+    private let separatorView = UIView()
+    private let emailPhoneTextField = LogInTextField(placeholderText: "Phone or email")
+    private let passwordTextField = LogInTextField(placeholderText: "Password", state: .secure)
+    
+    override init(frame: CGRect) {
+        super.init(frame: .zero)
+        setupTextFieldsView()
+    }
+    
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
+
+extension TextFieldsView {
+    
+    func setupTextFieldsView() {
+        addSubview(separatorView)
+        addSubview(emailPhoneTextField)
+        addSubview(passwordTextField)
+        
+        separatorView.translatesAutoresizingMaskIntoConstraints = false
+        emailPhoneTextField.translatesAutoresizingMaskIntoConstraints = false
+        passwordTextField.translatesAutoresizingMaskIntoConstraints = false
+        
+        backgroundColor = .systemGray6
+        layer.cornerRadius = 10
+        layer.borderWidth = 0.5
+        layer.borderColor = UIColor.lightGray.cgColor
+        
+        separatorView.backgroundColor = .lightGray
+        
+        NSLayoutConstraint.activate([
+            heightAnchor.constraint(equalToConstant: 100),
+            
+            separatorView.heightAnchor.constraint(equalToConstant: 0.5),
+            separatorView.leftAnchor.constraint(equalTo: leftAnchor),
+            separatorView.rightAnchor.constraint(equalTo: rightAnchor),
+            separatorView.topAnchor.constraint(equalTo: topAnchor, constant: 50),
+            
+            emailPhoneTextField.widthAnchor.constraint(equalTo: widthAnchor),
+            emailPhoneTextField.topAnchor.constraint(equalTo: topAnchor, constant: 15),
+            
+            passwordTextField.widthAnchor.constraint(equalTo: widthAnchor),
+            passwordTextField.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -15)
+        ])
+    }
+}
+
+final class LogInTextField: UITextField {
+    
+    enum StateSecure {
+        case notSecure
+        case secure
+        
+        var isSecure: Bool {
+            switch self {
+            case .notSecure:
+                return false
+            case .secure:
+                return true
+            }
+        }
+    }
+    
+    let padding = UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 5)
+    
+    init(placeholderText: String, state: StateSecure = .notSecure) {
+        super.init(frame: .zero)
+        setupLogInTextField()
+        placeholder = placeholderText
+        isSecureTextEntry = state.isSecure
+    }
+    
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    // MARK: - Padding methods
+    
+    override public func textRect(forBounds bounds: CGRect) -> CGRect {
+        return bounds.inset(by: padding)
+    }
+    
+    override public func placeholderRect(forBounds bounds: CGRect) -> CGRect {
+        return bounds.inset(by: padding)
+    }
+    
+    override public func editingRect(forBounds bounds: CGRect) -> CGRect {
+        return bounds.inset(by: padding)
+    }
+}
+
+extension LogInTextField {
+    
+    private func setupLogInTextField() {
+        backgroundColor = .clear
+    }
+}
+
