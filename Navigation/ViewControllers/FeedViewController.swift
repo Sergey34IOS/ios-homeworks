@@ -9,7 +9,7 @@ import UIKit
 
 final class FeedViewController: UIViewController {
     
-    let post = Post(title: "What's going on")
+    let post = Post(author: "", image: "", description: "What's going on", likes: 0, views: 0)
     let stackView = UIStackView()
     let firstButton = UIButton()
     let secondButton = UIButton()
@@ -21,7 +21,7 @@ final class FeedViewController: UIViewController {
     
     @objc
     private func someAction() {
-        let vc = PostViewController(text: post.title)
+        let vc = PostViewController(text: post.description)
         navigationController?.pushViewController(vc, animated: true)
     }
 }

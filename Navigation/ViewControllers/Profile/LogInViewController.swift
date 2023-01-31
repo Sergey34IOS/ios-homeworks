@@ -9,39 +9,56 @@ import UIKit
 
 final class LogInViewController: UIViewController {
     
-    private let logoImage = UIImageView(image: UIImage(named: "logo"))
+    // MARK: - Properties
+    
+    private let logoImage: UIImageView = {
+        let logoImage = UIImageView(image: UIImage(named: "logo"))
+        return logoImage
+    }()
     
     private let textFieldsView = TextFieldsView()
     
-    private lazy var logInButton: UIButton = {
+    private let logInButton: UIButton = {
         let logInButton = UIButton()
-        logInButton.setTitle("Log in", for: .normal)
-        logInButton.setTitleColor(.white, for: .normal)
-        logInButton.layer.cornerRadius = 10
-        logInButton.backgroundColor = UIColor(patternImage: UIImage(named: "blue_pixel")!)
-        logInButton.addTarget(self, action: #selector(logInAction), for: .touchUpInside)
         return logInButton
     }()
+
+    // MARK: - Lifecycle
+    
+    override func loadView() {
+        super.loadView()
+        setupElements()
+        setupButton()
+        
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupElements()
         setupNotifications()
+        setupTargets()
+        setupGesture()
     }
+    
     private func setupNotifications() {        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
+    private func setupTargets() {
+        logInButton.addTarget(self, action: #selector(logInAction), for: .touchUpInside)
+    }
+
+    // MARK: - Action
+    
     @objc
-    func keyboardWillShow(notification: Notification) {
+    private func keyboardWillShow(notification: Notification) {
         if let keyboardHeight = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue.height {
             view.frame.origin.y = -keyboardHeight
         }
     }
     
     @objc
-    func keyboardWillHide(notification: Notification) {
+    private func keyboardWillHide(notification: Notification) {
         view.frame.origin.y = 0
     }
     
@@ -51,18 +68,29 @@ final class LogInViewController: UIViewController {
         navigationController?.pushViewController(vc, animated: true)
     }
     
-    @objc private func dismissKeyboarFrame() {
+    @objc
+    private func dismissKeyboarFrame() {
         view.endEditing(true)
     }
+        
+    private func setupGesture() {
+        let gesture = UITapGestureRecognizer()
+        gesture.numberOfTapsRequired = 1
+        view.addGestureRecognizer(gesture)
+        gesture.addTarget(self, action: #selector(dismissKeyboarFrame))
+    }
+}
+
+extension LogInViewController {
     
-    func setupElements() {
+    private func setupElements() {
         view.addSubview(logoImage)
         view.addSubview(textFieldsView)
         view.addSubview(logInButton)
         logoImage.translatesAutoresizingMaskIntoConstraints = false
         textFieldsView.translatesAutoresizingMaskIntoConstraints = false
         logInButton.translatesAutoresizingMaskIntoConstraints = false
-        setupGesture()
+        
         
         NSLayoutConstraint.activate([
             logoImage.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 120),
@@ -81,11 +109,11 @@ final class LogInViewController: UIViewController {
         ])
     }
     
-    func setupGesture() {
-        let gesture = UITapGestureRecognizer()
-        gesture.numberOfTapsRequired = 1
-        view.addGestureRecognizer(gesture)
-        gesture.addTarget(self, action: #selector(dismissKeyboarFrame))
+    private func setupButton() {
+        logInButton.setTitle("Log in", for: .normal)
+        logInButton.setTitleColor(.white, for: .normal)
+        logInButton.layer.cornerRadius = 10
+        logInButton.backgroundColor = UIColor(patternImage: UIImage(named: "blue_pixel")!)
     }
 }
 
@@ -108,7 +136,7 @@ final class TextFieldsView: UIView {
 
 extension TextFieldsView {
     
-    func setupTextFieldsView() {
+    private func setupTextFieldsView() {
         addSubview(separatorView)
         addSubview(emailPhoneTextField)
         addSubview(passwordTextField)
@@ -157,7 +185,7 @@ final class LogInTextField: UITextField {
         }
     }
     
-    let padding = UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 5)
+    private let padding = UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 5)
     
     init(placeholderText: String, state: StateSecure = .notSecure) {
         super.init(frame: .zero)
@@ -173,15 +201,15 @@ final class LogInTextField: UITextField {
     
     // MARK: - Padding methods
     
-    override public func textRect(forBounds bounds: CGRect) -> CGRect {
+    override func textRect(forBounds bounds: CGRect) -> CGRect {
         return bounds.inset(by: padding)
     }
     
-    override public func placeholderRect(forBounds bounds: CGRect) -> CGRect {
+    override func placeholderRect(forBounds bounds: CGRect) -> CGRect {
         return bounds.inset(by: padding)
     }
     
-    override public func editingRect(forBounds bounds: CGRect) -> CGRect {
+    override func editingRect(forBounds bounds: CGRect) -> CGRect {
         return bounds.inset(by: padding)
     }
 }
