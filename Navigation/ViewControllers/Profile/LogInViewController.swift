@@ -29,7 +29,6 @@ final class LogInViewController: UIViewController {
         super.loadView()
         setupElements()
         setupButton()
-        
     }
     
     override func viewDidLoad() {
@@ -39,7 +38,8 @@ final class LogInViewController: UIViewController {
         setupGesture()
     }
     
-    private func setupNotifications() {        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+    private func setupNotifications() {
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }

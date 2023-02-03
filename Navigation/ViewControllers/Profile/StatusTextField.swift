@@ -46,14 +46,11 @@ extension StatusTextField {
     
     private func setup() {
         backgroundColor = .white
-        
         layer.cornerRadius = 12
         layer.borderWidth = 1
         layer.borderColor = UIColor.black.cgColor
-        
         font = UIFont.systemFont(ofSize: 15, weight: .regular)
         text = "Enter status..."
     }
 }
 
-// textfield.isSecure
