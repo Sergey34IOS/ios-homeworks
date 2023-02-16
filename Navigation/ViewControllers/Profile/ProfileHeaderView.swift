@@ -10,9 +10,8 @@ import UIKit
 final class ProfileHeaderView: UIView {
     
     // MARK: - Properties
-    
+
     private var statusText = ""
-    
     private let catImage = UIImageView(image: UIImage(named: "felix"))
     private let nameLabel = UILabel()
     private let statusLabel = UILabel()
@@ -21,9 +20,10 @@ final class ProfileHeaderView: UIView {
     
     // MARK: - Initializers
     
-    override init(frame: CGRect) {
+   override init(frame: CGRect) {
         super.init(frame: .zero)
         setup()
+        addConstraints()
         addRecognizer()
         let currentStatus = UserDefaults.standard.string(forKey: "someValue")
         if currentStatus == "" {
@@ -81,8 +81,7 @@ extension ProfileHeaderView {
     // MARK: - ProfileHeaderView Methods
     
     private func setup() {
-        backgroundColor = .lightGray
-        
+        backgroundColor = .systemGray6
         addSubview(catImage)
         addSubview(nameLabel)
         addSubview(statusLabel)
@@ -97,12 +96,15 @@ extension ProfileHeaderView {
         
         nameLabel.text = "Felix the Cat"
         nameLabel.font = UIFont.systemFont(ofSize: 18, weight: .bold)
-    
+        
         statusLabel.font = UIFont.systemFont(ofSize: 14, weight: .regular)
         statusLabel.textColor = .gray
         
         statusButton.addTarget(self, action: #selector(buttonDidTap), for: .touchUpInside)
         statusTextField.addTarget(self, action: #selector(statusTextChanged), for: .editingChanged)
+    }
+    
+    private func addConstraints() {
         
         [catImage, nameLabel, statusLabel, statusTextField, statusButton].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
@@ -120,15 +122,16 @@ extension ProfileHeaderView {
             statusLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 30),
             statusLabel.leftAnchor.constraint(equalTo: nameLabel.leftAnchor),
             
-            statusTextField.bottomAnchor.constraint(equalTo: statusButton.topAnchor, constant: -20),
+            statusTextField.topAnchor.constraint(equalTo: statusLabel.bottomAnchor, constant: 20),
             statusTextField.leftAnchor.constraint(equalTo: nameLabel.leftAnchor),
             statusTextField.heightAnchor.constraint(equalToConstant: 40),
             statusTextField.rightAnchor.constraint(equalTo: statusButton.rightAnchor),
             
-            statusButton.topAnchor.constraint(equalTo: catImage.bottomAnchor, constant: 16),
-            statusButton.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 16),
+            statusButton.topAnchor.constraint(equalTo: statusTextField.bottomAnchor, constant: 16),
+            statusButton.leftAnchor.constraint(equalTo: nameLabel.leftAnchor),
             statusButton.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -16),
-            statusButton.heightAnchor.constraint(equalToConstant: 50)
+            statusButton.heightAnchor.constraint(equalToConstant: 50),
+            statusButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -5)
         ])
     }
 }

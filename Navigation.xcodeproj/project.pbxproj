@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1A1CC4FD29888A7000ABEBE1 /* DataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A1CC4FC29888A7000ABEBE1 /* DataSource.swift */; };
+		1A4D3CE3295B13E2006F06D9 /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4D3CE2295B13E2006F06D9 /* LogInViewController.swift */; };
+		1AB05FB9298BE3AA0007C2FD /* PostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AB05FB8298BE3AA0007C2FD /* PostTableViewCell.swift */; };
 		FFD044972954C5DA00643070 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFD044962954C5DA00643070 /* AppDelegate.swift */; };
 		FFD044A02954C5DB00643070 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FFD0449F2954C5DB00643070 /* Assets.xcassets */; };
 		FFD044A32954C5DB00643070 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FFD044A12954C5DB00643070 /* LaunchScreen.storyboard */; };
@@ -21,6 +24,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1A1CC4FC29888A7000ABEBE1 /* DataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataSource.swift; sourceTree = "<group>"; };
+		1A4D3CE2295B13E2006F06D9 /* LogInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
+		1AB05FB8298BE3AA0007C2FD /* PostTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostTableViewCell.swift; sourceTree = "<group>"; };
 		FFD044932954C5DA00643070 /* Navigation.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Navigation.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FFD044962954C5DA00643070 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FFD0449F2954C5DB00643070 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -77,63 +83,34 @@
 		FFD044AA2954CCBE00643070 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				FFD044B72954CE6400643070 /* InfoViewController */,
-				FFD044B12954CD5F00643070 /* ProfileViewController */,
-				FFD044AF2954CD3700643070 /* FeedViewController */,
-				FFD044B02954CD4400643070 /* PostViewController */,
+				FFD044B12954CD5F00643070 /* Profile */,
+				FFD044AD2954CD1B00643070 /* PostViewController.swift */,
+				FFD044AB2954CCF500643070 /* FeedViewController.swift */,
+				FFD044B82954CE8100643070 /* InfoViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
 		};
-		FFD044AF2954CD3700643070 /* FeedViewController */ = {
-			isa = PBXGroup;
-			children = (
-				FFD044AB2954CCF500643070 /* FeedViewController.swift */,
-			);
-			path = FeedViewController;
-			sourceTree = "<group>";
-		};
-		FFD044B02954CD4400643070 /* PostViewController */ = {
-			isa = PBXGroup;
-			children = (
-				FFD044AD2954CD1B00643070 /* PostViewController.swift */,
-			);
-			path = PostViewController;
-			sourceTree = "<group>";
-		};
-		FFD044B12954CD5F00643070 /* ProfileViewController */ = {
+		FFD044B12954CD5F00643070 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
 				FFD044B22954CD7400643070 /* ProfileViewController.swift */,
-				FFD044BA2954CF5200643070 /* Components */,
+				1A4D3CE2295B13E2006F06D9 /* LogInViewController.swift */,
+				FFD044BB2954CF6300643070 /* ProfileHeaderView.swift */,
+				FFD044BD2954CF9700643070 /* StatusTextField.swift */,
+				FFD044BF2954CFB600643070 /* StatusButton.swift */,
+				1AB05FB8298BE3AA0007C2FD /* PostTableViewCell.swift */,
 			);
-			path = ProfileViewController;
+			path = Profile;
 			sourceTree = "<group>";
 		};
 		FFD044B42954CDB100643070 /* Model */ = {
 			isa = PBXGroup;
 			children = (
 				FFD044B52954CDC000643070 /* PostModel.swift */,
+				1A1CC4FC29888A7000ABEBE1 /* DataSource.swift */,
 			);
 			path = Model;
-			sourceTree = "<group>";
-		};
-		FFD044B72954CE6400643070 /* InfoViewController */ = {
-			isa = PBXGroup;
-			children = (
-				FFD044B82954CE8100643070 /* InfoViewController.swift */,
-			);
-			path = InfoViewController;
-			sourceTree = "<group>";
-		};
-		FFD044BA2954CF5200643070 /* Components */ = {
-			isa = PBXGroup;
-			children = (
-				FFD044BB2954CF6300643070 /* ProfileHeaderView.swift */,
-				FFD044BD2954CF9700643070 /* StatusTextField.swift */,
-				FFD044BF2954CFB600643070 /* StatusButton.swift */,
-			);
-			path = Components;
 			sourceTree = "<group>";
 		};
 		FFD044C12954D16500643070 /* Helpers */ = {
@@ -224,7 +201,10 @@
 				FFD044B32954CD7400643070 /* ProfileViewController.swift in Sources */,
 				FFD044AC2954CCF500643070 /* FeedViewController.swift in Sources */,
 				FFD044972954C5DA00643070 /* AppDelegate.swift in Sources */,
+				1A4D3CE3295B13E2006F06D9 /* LogInViewController.swift in Sources */,
+				1A1CC4FD29888A7000ABEBE1 /* DataSource.swift in Sources */,
 				FFD044BC2954CF6300643070 /* ProfileHeaderView.swift in Sources */,
+				1AB05FB9298BE3AA0007C2FD /* PostTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -369,6 +349,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -395,6 +376,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

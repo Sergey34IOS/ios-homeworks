@@ -16,7 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let tabBarController = UITabBarController()
         let feedNavigationController = UINavigationController(rootViewController: FeedViewController())
-        let profileNavigationController = UINavigationController(rootViewController: ProfileViewController())
+        let profileNavigationController = UINavigationController(rootViewController: LogInViewController())
         
         tabBarController.viewControllers = [feedNavigationController, profileNavigationController]
         
