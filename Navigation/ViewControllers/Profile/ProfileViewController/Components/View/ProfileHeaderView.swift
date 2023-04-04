@@ -8,29 +8,78 @@
 import UIKit
 
 final class ProfileHeaderView: UIView {
-    
-    // MARK: - Properties
 
-    private var statusText = ""
-    private let catImage = UIImageView(image: UIImage(named: "felix"))
-    private let nameLabel = UILabel()
-    private let statusLabel = UILabel()
-    private let statusTextField = StatusTextField()
-    private let statusButton = StatusButton()
+    private var catImage: UIImageView = {
+        var catImage = UIImageView()
+        catImage.image = UIImage(named: "felix")
+        catImage.clipsToBounds = true
+        catImage.contentMode = .scaleAspectFill
+        catImage.layer.cornerRadius = 65
+        catImage.layer.borderWidth = 3
+        catImage.layer.borderColor = UIColor.white.cgColor
+        return catImage
+    }()
+    
+    private var nameLabel: UILabel = {
+        var nameLabel = UILabel()
+        nameLabel.text = "Felix the Cat"
+        nameLabel.font = UIFont.systemFont(ofSize: 18, weight: .bold)
+        return nameLabel
+    }()
+    
+    private var statusLabel: UILabel = {
+        var statusLabel = UILabel()
+        statusLabel.font = UIFont.systemFont(ofSize: 14, weight: .regular)
+        statusLabel.textColor = .gray
+        return statusLabel
+    }()
+    
+    private var statusText: String = ""
+    
+    private var statusTextField: UITextField = {
+        var statusTextField = UITextField()
+        statusTextField.backgroundColor = .white
+        statusTextField.layer.cornerRadius = 12
+        statusTextField.layer.borderWidth = 1
+        statusTextField.layer.borderColor = UIColor.black.cgColor
+        statusTextField.font = UIFont.systemFont(ofSize: 15, weight: .regular)
+        statusTextField.placeholder = "Enter status..."
+        statusTextField.clearButtonMode = .whileEditing
+        statusTextField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 0))
+        statusTextField.leftViewMode = .always
+        return statusTextField
+    }()
+
+    private var statusButton: UIButton = {
+        var statusButton = UIButton()
+        statusButton.layer.cornerRadius = 12
+        statusButton.backgroundColor = UIColor(named: "custom_blue_color")
+        statusButton.setTitle("Set status", for: .normal)
+        statusButton.setTitleColor(.white, for: .normal)
+        
+        statusButton.layer.shadowOffset = CGSize(width: 4, height: 4)
+        statusButton.layer.shadowOpacity = 0.7
+        statusButton.layer.shadowRadius = 4
+        statusButton.layer.shadowColor = UIColor.black.cgColor
+        return statusButton
+    }()
     
     // MARK: - Initializers
     
    override init(frame: CGRect) {
         super.init(frame: .zero)
-        setup()
+        backgroundColor = .systemGray6
+        addSubviews()
+        setTargets()
         addConstraints()
         addRecognizer()
-        let currentStatus = UserDefaults.standard.string(forKey: "someValue")
-        if currentStatus == "" {
-            self.statusLabel.text = "Print something..."
-        } else {
-            self.statusLabel.text = currentStatus
-        }
+       
+       let currentStatus = UserDefaults.standard.string(forKey: "someValue")
+       if currentStatus == "" {
+           self.statusLabel.text = "Print something..."
+       } else {
+           self.statusLabel.text = currentStatus
+       }
     }
     
     @available(*, unavailable)
@@ -50,11 +99,11 @@ final class ProfileHeaderView: UIView {
         UserDefaults.standard.set(statusTextField.text, forKey: "someValue")
         
         statusLabel.text = self.statusText
-        statusTextField.text = "Enter status..."
+        statusTextField.placeholder = "Enter status..."
         
         if statusText == "" {
             statusLabel.text = "Print something..."
-            statusTextField.text = "Enter status..."
+            statusTextField.placeholder = "Enter status..."
         }
     }
     
@@ -64,7 +113,6 @@ final class ProfileHeaderView: UIView {
         if statusText == "" {
             statusLabel.text = "Print something..."
         }
-        statusTextField.text = "Enter status..."
     }
     
     // MARK: - Gesture
@@ -78,35 +126,22 @@ final class ProfileHeaderView: UIView {
 
 extension ProfileHeaderView {
     
-    // MARK: - ProfileHeaderView Methods
-    
-    private func setup() {
-        backgroundColor = .systemGray6
+    private func addSubviews() {
         addSubview(catImage)
         addSubview(nameLabel)
         addSubview(statusLabel)
         addSubview(statusTextField)
         addSubview(statusButton)
-        
-        catImage.clipsToBounds = true
-        catImage.contentMode = .scaleAspectFill
-        catImage.layer.cornerRadius = 65
-        catImage.layer.borderWidth = 3
-        catImage.layer.borderColor = UIColor.white.cgColor
-        
-        nameLabel.text = "Felix the Cat"
-        nameLabel.font = UIFont.systemFont(ofSize: 18, weight: .bold)
-        
-        statusLabel.font = UIFont.systemFont(ofSize: 14, weight: .regular)
-        statusLabel.textColor = .gray
-        
+    }
+    
+    private func setTargets() {
         statusButton.addTarget(self, action: #selector(buttonDidTap), for: .touchUpInside)
         statusTextField.addTarget(self, action: #selector(statusTextChanged), for: .editingChanged)
     }
     
     private func addConstraints() {
         
-        [catImage, nameLabel, statusLabel, statusTextField, statusButton].forEach {
+        [catImage, nameLabel, statusButton, statusLabel, statusTextField].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
         }
         
@@ -128,11 +163,10 @@ extension ProfileHeaderView {
             statusTextField.rightAnchor.constraint(equalTo: statusButton.rightAnchor),
             
             statusButton.topAnchor.constraint(equalTo: statusTextField.bottomAnchor, constant: 16),
-            statusButton.leftAnchor.constraint(equalTo: nameLabel.leftAnchor),
+            statusButton.leftAnchor.constraint(equalTo: leftAnchor, constant: 16),
             statusButton.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -16),
             statusButton.heightAnchor.constraint(equalToConstant: 50),
             statusButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -5)
         ])
     }
 }
-

@@ -21,6 +21,7 @@ class PostViewController: UIViewController {
     
     override func loadView() {
         super.loadView()
+        view.backgroundColor = .red
     }
 
     override func viewDidLoad() {
@@ -51,9 +52,9 @@ extension PostViewController {
         appearance.backgroundColor = .gray
         navigationController?.navigationBar.standardAppearance = appearance
         navigationController?.navigationBar.scrollEdgeAppearance = appearance
-        
-        
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(tapAction))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add,
+                                                            target: self,
+                                                            action: #selector(tapAction))
     }
 }
 

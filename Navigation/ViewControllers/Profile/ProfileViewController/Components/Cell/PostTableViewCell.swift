@@ -9,6 +9,12 @@ import UIKit
 
 final class PostTableViewCell: UITableViewCell {
     
+    var views: Int = 0 {
+        didSet {
+            cellViews.text = "Views: \(views)"
+        }
+    }
+    
     private lazy var cellAuthor: UILabel = {
         let cellAuthor = UILabel()
         cellAuthor.font = .boldSystemFont(ofSize: 20)
@@ -51,13 +57,15 @@ final class PostTableViewCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         addSubviews()
         setConstraints()
-        
     }
         
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
+    func makeViews(view: Int) {
+        self.cellViews.text = "Views: \(view)"
+    }
 
     private func addSubviews() {
         contentView.addSubview(cellAuthor)

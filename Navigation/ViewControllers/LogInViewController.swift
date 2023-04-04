@@ -28,6 +28,7 @@ final class LogInViewController: UIViewController {
     override func loadView() {
         super.loadView()
         setupElements()
+        setupGesture()
         setupButton()
     }
     
@@ -38,17 +39,15 @@ final class LogInViewController: UIViewController {
         setupGesture()
     }
     
+    private func setupTargets() {
+           logInButton.addTarget(self, action: #selector(logInAction), for: .touchUpInside)
+       }
+    
     private func setupNotifications() {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
-    
-    private func setupTargets() {
-        logInButton.addTarget(self, action: #selector(logInAction), for: .touchUpInside)
-    }
-
-    // MARK: - Action
     
     @objc
     private func keyboardWillShow(notification: Notification) {
@@ -63,16 +62,16 @@ final class LogInViewController: UIViewController {
     }
     
     @objc
-    private func logInAction() {
-        let vc = ProfileViewController()
-        navigationController?.pushViewController(vc, animated: true)
-    }
-    
-    @objc
     private func dismissKeyboarFrame() {
         view.endEditing(true)
     }
-        
+    
+    @objc
+        private func logInAction() {
+            let vc = ProfileViewController()
+            navigationController?.pushViewController(vc, animated: true)
+        }
+    
     private func setupGesture() {
         let gesture = UITapGestureRecognizer()
         gesture.numberOfTapsRequired = 1
@@ -113,7 +112,7 @@ extension LogInViewController {
         logInButton.setTitle("Log in", for: .normal)
         logInButton.setTitleColor(.white, for: .normal)
         logInButton.layer.cornerRadius = 10
-        logInButton.backgroundColor = UIColor(patternImage: UIImage(named: "blue_pixel")!)
+        logInButton.backgroundColor = UIColor(named: "custom_blue_color")
     }
 }
 
