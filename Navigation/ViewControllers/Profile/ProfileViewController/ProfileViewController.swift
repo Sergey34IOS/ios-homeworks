@@ -72,6 +72,7 @@ extension ProfileViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: PhotosTableViewCell.self), for: indexPath) as! PhotosTableViewCell
+            cell.arrowDidTapDelegate = self
             return cell
         } else {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "post", for: indexPath) as? PostTableViewCell else { return UITableViewCell() }
@@ -94,12 +95,21 @@ extension ProfileViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let cell = tableView.cellForRow(at: indexPath) as! PostTableViewCell
-        let vc = UINavigationController(rootViewController: DetailPostViewController(model: MockModel.post[indexPath.row],
-                                                                                     views: cell.views, handler: { result in
-            
-            cell.views += result
-        }))
-        navigationController?.present(vc, animated: true)
+        if indexPath.section != 0 {
+            let cell = tableView.cellForRow(at: indexPath) as! PostTableViewCell
+            let vc = UINavigationController(rootViewController: DetailPostViewController(model: MockModel.post[indexPath.row],
+                                                                                         views: cell.views, handler: { result in
+                
+                cell.views += result
+            }))
+            navigationController?.present(vc, animated: true)
+        }
+    }
+}
+
+extension ProfileViewController: ArrowDidTapDelegate {
+    func arrowDidTap() {
+        let vc = PhotosViewController(images: MockModel.photos)
+        navigationController?.pushViewController(vc, animated: true)
     }
 }

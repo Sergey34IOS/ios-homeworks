@@ -7,9 +7,15 @@
 
 import UIKit
 
+protocol ArrowDidTapDelegate: AnyObject {
+    func arrowDidTap()
+}
+
 final class PhotosTableViewCell: UITableViewCell {
 
     // MARK: - Properties
+    
+    weak var arrowDidTapDelegate: ArrowDidTapDelegate?
 
     private  var descriptionLabel: UILabel = {
         var galleryLabel = UILabel()
@@ -20,10 +26,11 @@ final class PhotosTableViewCell: UITableViewCell {
         return galleryLabel
     }()
     
-    private lazy var arrowImage: UIImageView = {
-        var arrow = UIImageView()
-        arrow.image = UIImage(systemName: "arrow.forward")
-        arrow.tintColor = .black
+    private lazy var arrowButton: UIButton = {
+        var arrow = UIButton()
+        arrow.setImage(UIImage(systemName: "arrow.forward"), for: .normal)
+        arrow.addTarget(self, action: #selector(arrowAction), for: .touchUpInside)
+        arrow.backgroundColor = .clear
         arrow.translatesAutoresizingMaskIntoConstraints = false
         return arrow
     }()
@@ -53,7 +60,7 @@ final class PhotosTableViewCell: UITableViewCell {
     }
     
     private func addSubviews() {
-        contentView.addSubview(arrowImage)
+        contentView.addSubview(arrowButton)
         contentView.addSubview(descriptionLabel)
         contentView.addSubview(collectionView)
     }
@@ -63,15 +70,20 @@ final class PhotosTableViewCell: UITableViewCell {
             descriptionLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 12),
             descriptionLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 12),
         
-            arrowImage.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -12),
-            arrowImage.centerYAnchor.constraint(equalTo: descriptionLabel.centerYAnchor),
+            arrowButton.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -12),
+            arrowButton.centerYAnchor.constraint(equalTo: descriptionLabel.centerYAnchor),
 
-            collectionView.topAnchor.constraint(equalTo: arrowImage.bottomAnchor, constant: 10),
+            collectionView.topAnchor.constraint(equalTo: arrowButton.bottomAnchor, constant: 10),
             collectionView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 12),
             collectionView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -12),
             collectionView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8),
             collectionView.heightAnchor.constraint(equalToConstant: 80)
         ])
+    }
+    
+    @objc
+    private func arrowAction() {
+        arrowDidTapDelegate?.arrowDidTap()
     }
 }
 
