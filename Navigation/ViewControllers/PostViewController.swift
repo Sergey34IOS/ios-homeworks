@@ -23,7 +23,7 @@ class PostViewController: UIViewController {
         super.loadView()
         view.backgroundColor = .red
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setup()

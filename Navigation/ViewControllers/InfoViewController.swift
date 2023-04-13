@@ -48,12 +48,12 @@ extension InfoViewController {
         view.addSubview(button)
         view.backgroundColor = .systemTeal
         button.translatesAutoresizingMaskIntoConstraints = false
-
+        
         NSLayoutConstraint.activate([
             button.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             button.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-            button.widthAnchor.constraint(equalToConstant: 200),
-            button.heightAnchor.constraint(equalToConstant: 50)
+            button.widthAnchor.constraint(equalToConstant: Metric.widthAnchor),
+            button.heightAnchor.constraint(equalToConstant: Metric.heightAnchor)
         ])
     }
 }

@@ -14,6 +14,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
+        let logInViewController = LogInViewController()
         let tabBarController = UITabBarController()
         let feedNavigationController = UINavigationController(rootViewController: FeedViewController())
         let profileNavigationController = UINavigationController(rootViewController: LogInViewController())

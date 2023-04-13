@@ -12,11 +12,11 @@ protocol ArrowDidTapDelegate: AnyObject {
 }
 
 final class PhotosTableViewCell: UITableViewCell {
-
+    
     // MARK: - Properties
     
     weak var arrowDidTapDelegate: ArrowDidTapDelegate?
-
+    
     private  var descriptionLabel: UILabel = {
         var galleryLabel = UILabel()
         galleryLabel.text = "Photos"
@@ -67,16 +67,16 @@ final class PhotosTableViewCell: UITableViewCell {
     
     private func setConstraints() {
         NSLayoutConstraint.activate([
-            descriptionLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 12),
-            descriptionLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 12),
-        
-            arrowButton.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -12),
+            descriptionLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: Padding.photosTable),
+            descriptionLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: Padding.photosTable),
+            
+            arrowButton.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -Padding.photosTable),
             arrowButton.centerYAnchor.constraint(equalTo: descriptionLabel.centerYAnchor),
-
+            
             collectionView.topAnchor.constraint(equalTo: arrowButton.bottomAnchor, constant: 10),
-            collectionView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 12),
-            collectionView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -12),
-            collectionView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8),
+            collectionView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: Padding.photosTable),
+            collectionView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -Padding.photosTable),
+            collectionView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -Padding.photosTable),
             collectionView.heightAnchor.constraint(equalToConstant: 80)
         ])
     }
@@ -105,7 +105,7 @@ extension PhotosTableViewCell: UICollectionViewDataSource {
 extension PhotosTableViewCell: UICollectionViewDelegateFlowLayout {
     
     // MARK: - UICollectionViewDelegateFlowLayout methods
-
+    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         let viewController = SelectedPhotoViewController(image: MockModel.photos[indexPath.row + 1] ?? UIImage())

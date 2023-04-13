@@ -10,7 +10,7 @@ import UIKit
 final class DetailPostViewController: UIViewController {
     
     // MARK: - Properties
-
+    
     private lazy var myImage: UIImageView = {
         var myImage = UIImageView()
         myImage.translatesAutoresizingMaskIntoConstraints = false
@@ -71,13 +71,13 @@ extension DetailPostViewController {
             myImage.rightAnchor.constraint(equalTo: view.rightAnchor),
             myImage.heightAnchor.constraint(equalToConstant: 400),
             
-            descriptionLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 16),
-            descriptionLabel.topAnchor.constraint(equalTo: myImage.bottomAnchor, constant: 16),
-            descriptionLabel.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -16),
+            descriptionLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: Padding.inset),
+            descriptionLabel.topAnchor.constraint(equalTo: myImage.bottomAnchor, constant: Padding.inset),
+            descriptionLabel.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -Padding.inset),
             
-            likesViewsView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 16),
-            likesViewsView.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: 16),
-            likesViewsView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -16),
+            likesViewsView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: Padding.inset),
+            likesViewsView.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: Padding.inset),
+            likesViewsView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -Padding.inset),
             likesViewsView.heightAnchor.constraint(equalToConstant: 20)
         ])
     }

@@ -8,13 +8,11 @@
 import UIKit
 
 class SelectedPhotoViewController: UIViewController {
-
+    
     // MARK: - Properties
     
     var name: String?
-    
-    // MARK: - UI
-    
+
     private  var image: UIImageView = {
         $0.contentMode = .scaleAspectFit
         $0.translatesAutoresizingMaskIntoConstraints = false
@@ -25,8 +23,8 @@ class SelectedPhotoViewController: UIViewController {
     
     init(image: UIImage) {
         super.init(nibName: nil, bundle: nil)
-        updateBarAppearance()
-        setBackgroundcolor()
+        navigationController?.navigationBar.isHidden = false
+        view.backgroundColor = .white
         setViews()
         self.image.image = image
     }
@@ -57,15 +55,6 @@ extension SelectedPhotoViewController {
             image.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             image.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
-    }
-    
-    private func updateBarAppearance() {
-//        navigationController?.navigationBar.isHidden = false
-//        navigationController?.tabBarController?.tabBar.isHidden = true
-    }
-    
-    private func setBackgroundcolor() {
-        view.backgroundColor = .white
     }
 }
 

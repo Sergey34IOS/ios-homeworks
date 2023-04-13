@@ -9,6 +9,7 @@ import UIKit
 
 final class LogInViewController: UIViewController {
     
+    
     // MARK: - Properties
     
     private let logoImage: UIImageView = {
@@ -18,11 +19,12 @@ final class LogInViewController: UIViewController {
     
     private let textFieldsView = TextFieldsView()
     
-    private let logInButton: UIButton = {
+    private lazy var logInButton: UIButton = {
         let logInButton = UIButton()
+        logInButton.addTarget(self, action: #selector(logInAction), for: .touchUpInside)
         return logInButton
     }()
-
+    
     // MARK: - Lifecycle
     
     override func loadView() {
@@ -35,13 +37,8 @@ final class LogInViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNotifications()
-        setupTargets()
         setupGesture()
     }
-    
-    private func setupTargets() {
-           logInButton.addTarget(self, action: #selector(logInAction), for: .touchUpInside)
-       }
     
     private func setupNotifications() {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
@@ -67,10 +64,10 @@ final class LogInViewController: UIViewController {
     }
     
     @objc
-        private func logInAction() {
-            let vc = ProfileViewController()
-            navigationController?.pushViewController(vc, animated: true)
-        }
+    private func logInAction() {
+        let vc = ProfileViewController()
+        navigationController?.pushViewController(vc, animated: true)
+    }
     
     private func setupGesture() {
         let gesture = UITapGestureRecognizer()
@@ -94,16 +91,16 @@ extension LogInViewController {
         NSLayoutConstraint.activate([
             logoImage.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 120),
             logoImage.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            logoImage.heightAnchor.constraint(equalToConstant: 100),
-            logoImage.widthAnchor.constraint(equalToConstant: 100),
+            logoImage.heightAnchor.constraint(equalToConstant: Padding.heightAnchor),
+            logoImage.widthAnchor.constraint(equalToConstant: Padding.heightAnchor),
             
             textFieldsView.topAnchor.constraint(equalTo: logoImage.bottomAnchor, constant: 120),
-            textFieldsView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 16),
-            textFieldsView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -16),
+            textFieldsView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: Padding.inset),
+            textFieldsView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -Padding.inset),
             
-            logInButton.topAnchor.constraint(equalTo: textFieldsView.bottomAnchor, constant: 16),
-            logInButton.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 16),
-            logInButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -16),
+            logInButton.topAnchor.constraint(equalTo: textFieldsView.bottomAnchor, constant: Padding.inset),
+            logInButton.leftAnchor.constraint(equalTo: view.leftAnchor, constant: Padding.inset),
+            logInButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -Padding.inset),
             logInButton.heightAnchor.constraint(equalToConstant: 50)
         ])
     }
@@ -125,6 +122,7 @@ final class TextFieldsView: UIView {
     override init(frame: CGRect) {
         super.init(frame: .zero)
         setupTextFieldsView()
+        
     }
     
     @available(*, unavailable)
@@ -140,9 +138,8 @@ extension TextFieldsView {
         addSubview(emailPhoneTextField)
         addSubview(passwordTextField)
         
-        separatorView.translatesAutoresizingMaskIntoConstraints = false
-        emailPhoneTextField.translatesAutoresizingMaskIntoConstraints = false
-        passwordTextField.translatesAutoresizingMaskIntoConstraints = false
+        [separatorView, emailPhoneTextField, passwordTextField].forEach { $0.translatesAutoresizingMaskIntoConstraints = false
+        }
         
         backgroundColor = .systemGray6
         layer.cornerRadius = 10
@@ -152,7 +149,7 @@ extension TextFieldsView {
         separatorView.backgroundColor = .lightGray
         
         NSLayoutConstraint.activate([
-            heightAnchor.constraint(equalToConstant: 100),
+            heightAnchor.constraint(equalToConstant: Padding.heightAnchor),
             
             separatorView.heightAnchor.constraint(equalToConstant: 0.5),
             separatorView.leftAnchor.constraint(equalTo: leftAnchor),
@@ -219,4 +216,3 @@ extension LogInTextField {
         backgroundColor = .clear
     }
 }
-

@@ -11,7 +11,7 @@ final class ProfileViewController: UIViewController {
     
     // MARK: - Properties
     
-    let tableHeaderHeight: CGFloat = 220.0
+    let tableHeaderHeight: CGFloat = 220
     
     // MARK: - UI
     

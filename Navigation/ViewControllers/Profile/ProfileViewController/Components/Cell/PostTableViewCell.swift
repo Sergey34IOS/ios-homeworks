@@ -45,20 +45,20 @@ final class PostTableViewCell: UITableViewCell {
         cellLikes.isUserInteractionEnabled = true
         return cellLikes
     }()
-
+    
     private lazy var cellViews: UILabel = {
         let cellViews = UILabel()
         cellViews.font = .systemFont(ofSize: 16)
         cellViews.textColor = .black
         return cellViews
     }()
-
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         addSubviews()
         setConstraints()
     }
-        
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -66,7 +66,7 @@ final class PostTableViewCell: UITableViewCell {
     func makeViews(view: Int) {
         self.cellViews.text = "Views: \(view)"
     }
-
+    
     private func addSubviews() {
         contentView.addSubview(cellAuthor)
         contentView.addSubview(cellImage)
@@ -79,30 +79,30 @@ final class PostTableViewCell: UITableViewCell {
         [cellAuthor, cellImage, cellDescription, cellLikes, cellViews].forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
         
         NSLayoutConstraint.activate([
-
-            cellAuthor.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
-            cellAuthor.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 16),
-            cellAuthor.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -16),
-
-            cellImage.topAnchor.constraint(equalTo: cellAuthor.bottomAnchor, constant: 16),
+            
+            cellAuthor.topAnchor.constraint(equalTo: contentView.topAnchor, constant: Padding.inset),
+            cellAuthor.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: Padding.inset),
+            cellAuthor.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -Padding.inset),
+            
+            cellImage.topAnchor.constraint(equalTo: cellAuthor.bottomAnchor, constant: Padding.inset),
             cellImage.leftAnchor.constraint(equalTo: contentView.leftAnchor),
             cellImage.rightAnchor.constraint(equalTo: contentView.rightAnchor),
             cellImage.heightAnchor.constraint(equalTo: cellImage.widthAnchor),
-
-            cellDescription.topAnchor.constraint(equalTo: cellImage.bottomAnchor, constant: 16),
+            
+            cellDescription.topAnchor.constraint(equalTo: cellImage.bottomAnchor, constant: Padding.inset),
             cellDescription.leftAnchor.constraint(equalTo: cellAuthor.leftAnchor),
             cellDescription.rightAnchor.constraint(equalTo: cellAuthor.rightAnchor),
-
-            cellLikes.topAnchor.constraint(equalTo: cellDescription.bottomAnchor, constant: 16),
+            
+            cellLikes.topAnchor.constraint(equalTo: cellDescription.bottomAnchor, constant: Padding.inset),
             cellLikes.leftAnchor.constraint(equalTo: cellAuthor.leftAnchor),
-
+            
             cellViews.topAnchor.constraint(equalTo: cellLikes.topAnchor),
             cellViews.rightAnchor.constraint(equalTo: cellAuthor.rightAnchor),
-            cellViews.bottomAnchor.constraint(equalTo: contentView.bottomAnchor,  constant: -16)])
+            cellViews.bottomAnchor.constraint(equalTo: contentView.bottomAnchor,  constant: -Padding.inset)])
     }
-
+    
     func configPost(post: Post) {
-
+        
         cellAuthor.text = post.author
         cellImage.image = UIImage(named: post.image)
         cellDescription.text = post.description

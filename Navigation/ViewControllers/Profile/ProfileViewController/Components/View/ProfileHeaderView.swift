@@ -32,7 +32,7 @@ final class ProfileHeaderView: UIView {
         return view
     }()
     
-    private var xButton: UIButton = {
+    private lazy var xButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(systemName: "xmark"), for: .normal)
         button.alpha = 0.5
