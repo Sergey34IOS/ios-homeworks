@@ -86,7 +86,6 @@ final class PhotosTableViewCell: UITableViewCell {
         ])
     }
     
-    
     @objc
     private func arrowAction() {
         arrowDidTapDelegate?.arrowDidTap()
