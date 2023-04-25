@@ -7,43 +7,188 @@
 
 import UIKit
 
-final class LogInViewController: UIViewController {
-    
+final class LogInViewController: UIViewController, UITextFieldDelegate {
     
     // MARK: - Properties
+    
+    private lazy var scrollView: UIScrollView = {
+        let scrollView = UIScrollView()
+        scrollView.backgroundColor = .white
+        return scrollView
+    }()
+    
+    private lazy var contentView: UIView = {
+        let contentView = UIView()
+        contentView.backgroundColor = .white
+        return contentView
+    }()
     
     private let logoImage: UIImageView = {
         let logoImage = UIImageView(image: UIImage(named: "logo"))
         return logoImage
     }()
     
-    private let textFieldsView = TextFieldsView()
+    private lazy var loginForm: UIStackView = {
+        let loginForm = UIStackView()
+        loginForm.backgroundColor = .systemGray6
+        loginForm.axis = .vertical
+        loginForm.distribution = .fillEqually
+        loginForm.alignment = .fill
+        loginForm.layer.cornerRadius = 10
+        loginForm.layer.borderColor = UIColor.lightGray.cgColor
+        loginForm.layer.borderWidth = 0.5
+        loginForm.clipsToBounds = true
+        return loginForm
+    }()
+    
+    private lazy var emailField: UITextField = {
+        let loginText = UITextField()
+        loginText.backgroundColor = .systemGray6
+        loginText.placeholder = "Email"
+        loginText.layer.borderColor = UIColor.lightGray.cgColor
+        loginText.layer.borderWidth = 0.5
+        loginText.autocapitalizationType = .none
+        loginText.leftView = UIView(frame: CGRect(x: 0, y: 0, width: Padding.inset, height: 0))
+        loginText.delegate = self
+        loginText.leftViewMode = .always
+        loginText.rightViewMode = .always
+        loginText.translatesAutoresizingMaskIntoConstraints = false
+        return loginText
+    }()
+    
+    private lazy var passwordTextField: UITextField = {
+        let passwordText = UITextField()
+        passwordText.placeholder = "Password"
+        passwordText.backgroundColor = .systemGray6
+        passwordText.textColor = .black
+        passwordText.font = .systemFont(ofSize: 16)
+        passwordText.tintColor = UIColor(named: "customBlue")
+        passwordText.isSecureTextEntry = true
+        passwordText.autocapitalizationType = .none
+        passwordText.leftView = UIView(frame: CGRect(x: 0, y: 0, width: Padding.inset, height: 0))
+        passwordText.delegate = self
+        passwordText.leftViewMode = .always
+        passwordText.rightViewMode = .always
+        passwordText.rightView = .some(errorPasswordLabel)
+        return passwordText
+    }()
     
     private lazy var logInButton: UIButton = {
-        let logInButton = UIButton()
-        logInButton.addTarget(self, action: #selector(logInAction), for: .touchUpInside)
-        return logInButton
+        let button = UIButton()
+        button.setTitle("Login", for: .normal)
+        button.backgroundColor = UIColor.init(named: "customBlue")
+        button.layer.cornerRadius = 10
+        button.clipsToBounds = true
+        button.alpha = (button.isSelected || button.isHighlighted) ? 0.7 : 1
+        button.addTarget(self, action: #selector(logInAction), for: .touchUpInside)
+        return button
     }()
+    
+    private lazy var errorPasswordLabel: UILabel = {
+        let error = UILabel()
+        error.isHidden = true
+        error.textColor = .systemRed
+        error.text = "Min. 4 symbols "
+        return error
+    }()
+    
     
     // MARK: - Lifecycle
     
-    override func loadView() {
-        super.loadView()
-        setupElements()
-        setupGesture()
-        setupButton()
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupNotifications()
+        navigationController?.navigationBar.isHidden = false
+        tabBarController?.tabBar.isHidden = true
+        view.backgroundColor = .white
+        addSubviews()
+        setConstraints()
         setupGesture()
+        setupNotifications()
     }
     
-    private func setupNotifications() {
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+    
+    private func addSubviews() {
+        view.addSubview(scrollView)
+        view.addSubview(contentView)
+        contentView.addSubview(logoImage)
+        contentView.addSubview(loginForm)
+        view.addSubview(logInButton)
+        loginForm.addArrangedSubview(emailField)
+        loginForm.addArrangedSubview(passwordTextField)
         
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+    }
+    
+    // MARK: - Action
+    
+    @objc
+    private func logInAction() {
+        if emailField.text == "" || passwordTextField.text == ""
+        { shakeAnimation()
+        }
+        else if emailField.text != "1234@mail.ru" {
+            makeEmailAlert()
+        }
+        else if passwordTextField.text!.count < 4 {
+            errorPasswordLabel.text = errorPasswordLabel.text
+            errorPasswordLabel.isHidden = false
+        }
+        else if passwordTextField.text! != "1234" {
+            makePassAlert()
+        }
+        else {
+            let vc = ProfileViewController()
+            navigationController?.pushViewController(vc, animated: true)
+        }
+    }
+    
+    private func shakeAnimation() {
+        let animation = CABasicAnimation(keyPath: "position")
+        animation.duration = 0.07
+        animation.repeatCount = 4
+        animation.autoreverses = true
+        animation.fromValue = NSValue(cgPoint: CGPoint(x: loginForm.center.x - 10, y: loginForm.center.y))
+        animation.toValue = NSValue(cgPoint: CGPoint(x: loginForm.center.x + 10, y: loginForm.center.y))
+        
+        loginForm.layer.add(animation, forKey: "position")
+    }
+    
+    private func  minimumPassLengthAlert() {
+        
+        
+    }
+    private func makeEmailAlert() {
+        let alertController = UIAlertController(title: "Wrong email", message: "Enter 1234@mail.ru", preferredStyle: .alert)
+        let alertAction = UIAlertAction(title: "Back", style: .default, handler: { _ in
+            self.dismiss(animated: true)
+        })
+        alertController.addAction(alertAction)
+        present(alertController, animated: true)
+    }
+    
+    private func makePassAlert() {
+        let alertController = UIAlertController(title: "Wrong password", message: "Enter 1234", preferredStyle: .alert)
+        let alertAction = UIAlertAction(title: "Back", style: .default, handler: { _ in
+            self.dismiss(animated: true)
+        })
+        alertController.addAction(alertAction)
+        present(alertController, animated: true)
+    }
+    
+    private func setupGesture() {
+        let gesture = UITapGestureRecognizer()
+        gesture.numberOfTapsRequired = 1
+        view.addGestureRecognizer(gesture)
+        gesture.addTarget(self, action: #selector(dismissKeyboarFrame))
+    }
+    
+    @objc
+    private func tap() {
+        view.endEditing(true)
+        view.layoutIfNeeded()
     }
     
     @objc
@@ -63,156 +208,55 @@ final class LogInViewController: UIViewController {
         view.endEditing(true)
     }
     
-    @objc
-    private func logInAction() {
-        let vc = ProfileViewController()
-        navigationController?.pushViewController(vc, animated: true)
+    private func setupNotifications() {
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
-    private func setupGesture() {
-        let gesture = UITapGestureRecognizer()
-        gesture.numberOfTapsRequired = 1
-        view.addGestureRecognizer(gesture)
-        gesture.addTarget(self, action: #selector(dismissKeyboarFrame))
-    }
-}
-
-extension LogInViewController {
-    
-    private func setupElements() {
-        view.addSubview(logoImage)
-        view.addSubview(textFieldsView)
-        view.addSubview(logInButton)
-        logoImage.translatesAutoresizingMaskIntoConstraints = false
-        textFieldsView.translatesAutoresizingMaskIntoConstraints = false
-        logInButton.translatesAutoresizingMaskIntoConstraints = false
+    private func setConstraints() {
         
-        
-        NSLayoutConstraint.activate([
-            logoImage.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 120),
-            logoImage.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            logoImage.heightAnchor.constraint(equalToConstant: Padding.heightAnchor),
-            logoImage.widthAnchor.constraint(equalToConstant: Padding.heightAnchor),
+        [scrollView, contentView, loginForm, logInButton, logoImage, emailField, passwordTextField].forEach { $0.translatesAutoresizingMaskIntoConstraints = false
             
-            textFieldsView.topAnchor.constraint(equalTo: logoImage.bottomAnchor, constant: 120),
-            textFieldsView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: Padding.inset),
-            textFieldsView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -Padding.inset),
-            
-            logInButton.topAnchor.constraint(equalTo: textFieldsView.bottomAnchor, constant: Padding.inset),
-            logInButton.leftAnchor.constraint(equalTo: view.leftAnchor, constant: Padding.inset),
-            logInButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -Padding.inset),
-            logInButton.heightAnchor.constraint(equalToConstant: 50)
-        ])
-    }
-    
-    private func setupButton() {
-        logInButton.setTitle("Log in", for: .normal)
-        logInButton.setTitleColor(.white, for: .normal)
-        logInButton.layer.cornerRadius = 10
-        logInButton.backgroundColor = UIColor(named: "custom_blue_color")
-    }
-}
-
-final class TextFieldsView: UIView {
-    
-    private let separatorView = UIView()
-    private let emailPhoneTextField = LogInTextField(placeholderText: "Phone or email")
-    private let passwordTextField = LogInTextField(placeholderText: "Password", state: .secure)
-    
-    override init(frame: CGRect) {
-        super.init(frame: .zero)
-        setupTextFieldsView()
-        
-    }
-    
-    @available(*, unavailable)
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-}
-
-extension TextFieldsView {
-    
-    private func setupTextFieldsView() {
-        addSubview(separatorView)
-        addSubview(emailPhoneTextField)
-        addSubview(passwordTextField)
-        
-        [separatorView, emailPhoneTextField, passwordTextField].forEach { $0.translatesAutoresizingMaskIntoConstraints = false
+            NSLayoutConstraint.activate([
+                
+                scrollView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: Padding.inset),
+                scrollView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -Padding.inset),
+                scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+                scrollView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+                
+                contentView.topAnchor.constraint(equalTo: scrollView.topAnchor),
+                contentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
+                contentView.leftAnchor.constraint(equalTo: scrollView.leftAnchor),
+                contentView.rightAnchor.constraint(equalTo: scrollView.rightAnchor),
+                
+                
+                logoImage.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 120),
+                logoImage.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+                logoImage.heightAnchor.constraint(equalToConstant: Padding.heightAnchor),
+                logoImage.widthAnchor.constraint(equalToConstant: Padding.heightAnchor),
+                
+                loginForm.topAnchor.constraint(equalTo: logoImage.bottomAnchor, constant: 120),
+                loginForm.leftAnchor.constraint(equalTo: scrollView.leftAnchor, constant: Padding.inset),
+                loginForm.rightAnchor.constraint(equalTo: scrollView.rightAnchor, constant: -Padding.inset),
+                loginForm.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+                
+                
+                emailField.topAnchor.constraint(equalTo: loginForm.topAnchor),
+                emailField.leftAnchor.constraint(equalTo: loginForm.leftAnchor),
+                emailField.rightAnchor.constraint(equalTo: loginForm.rightAnchor),
+                emailField.heightAnchor.constraint(equalToConstant: 50),
+                
+                passwordTextField.topAnchor.constraint(equalTo: emailField.bottomAnchor),
+                passwordTextField.leftAnchor.constraint(equalTo: loginForm.leftAnchor),
+                passwordTextField.rightAnchor.constraint(equalTo: loginForm.rightAnchor),
+                passwordTextField.heightAnchor.constraint(equalToConstant: 50),
+                
+                logInButton.topAnchor.constraint(equalTo: loginForm.bottomAnchor, constant: Padding.inset),
+                logInButton.leftAnchor.constraint(equalTo: loginForm.leftAnchor),
+                logInButton.rightAnchor.constraint(equalTo: loginForm.rightAnchor),
+                logInButton.heightAnchor.constraint(equalToConstant: 50)
+            ])
         }
-        
-        backgroundColor = .systemGray6
-        layer.cornerRadius = 10
-        layer.borderWidth = 0.5
-        layer.borderColor = UIColor.lightGray.cgColor
-        
-        separatorView.backgroundColor = .lightGray
-        
-        NSLayoutConstraint.activate([
-            heightAnchor.constraint(equalToConstant: Padding.heightAnchor),
-            
-            separatorView.heightAnchor.constraint(equalToConstant: 0.5),
-            separatorView.leftAnchor.constraint(equalTo: leftAnchor),
-            separatorView.rightAnchor.constraint(equalTo: rightAnchor),
-            separatorView.topAnchor.constraint(equalTo: topAnchor, constant: 50),
-            
-            emailPhoneTextField.widthAnchor.constraint(equalTo: widthAnchor),
-            emailPhoneTextField.topAnchor.constraint(equalTo: topAnchor, constant: 15),
-            
-            passwordTextField.widthAnchor.constraint(equalTo: widthAnchor),
-            passwordTextField.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -15)
-        ])
-    }
-}
-
-final class LogInTextField: UITextField {
-    
-    enum StateSecure {
-        case notSecure
-        case secure
-        
-        var isSecure: Bool {
-            switch self {
-            case .notSecure:
-                return false
-            case .secure:
-                return true
-            }
-        }
-    }
-    
-    private let padding = UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 5)
-    
-    init(placeholderText: String, state: StateSecure = .notSecure) {
-        super.init(frame: .zero)
-        setupLogInTextField()
-        placeholder = placeholderText
-        isSecureTextEntry = state.isSecure
-    }
-    
-    @available(*, unavailable)
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    // MARK: - Padding methods
-    
-    override func textRect(forBounds bounds: CGRect) -> CGRect {
-        return bounds.inset(by: padding)
-    }
-    
-    override func placeholderRect(forBounds bounds: CGRect) -> CGRect {
-        return bounds.inset(by: padding)
-    }
-    
-    override func editingRect(forBounds bounds: CGRect) -> CGRect {
-        return bounds.inset(by: padding)
-    }
-}
-
-extension LogInTextField {
-    
-    private func setupLogInTextField() {
-        backgroundColor = .clear
     }
 }

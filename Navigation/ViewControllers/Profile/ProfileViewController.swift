@@ -9,14 +9,19 @@ import UIKit
 
 final class ProfileViewController: UIViewController {
     
-    var image = UIImageView()
-    var model = MockModel.post
+    // MARK: - Closure
     
-//    // MARK: - Closure
-//
-//    private lazy var animateHandler: (UIImageView) -> Void = { image in
-//        self.showAnimate(image: image)
-//    }
+    private lazy var likesHandler: (IndexPath) -> Void = { indexPath in
+        let cell = self.tableView.cellForRow(at: indexPath) as! PostTableViewCell
+        cell.likes += 1
+        self.likesDict[indexPath] = cell.likes
+    }
+
+    // MARK: - Model
+    
+    var likesDict: [IndexPath: Int] = [:]
+
+    var model = PostModel.post
     
     // MARK: - Properties
     
@@ -33,23 +38,6 @@ final class ProfileViewController: UIViewController {
         tableView.register(PhotosTableViewCell.self, forCellReuseIdentifier: String(describing: PhotosTableViewCell.self))
         tableView.register(PostTableViewCell.self, forCellReuseIdentifier: "post")
         return tableView
-    }()
-    
-    private lazy var xButton: UIButton = {
-        let button = UIButton()
-        button.setImage(UIImage(systemName: "xmark"), for: .normal)
-        button.alpha = 0
-        button.tintColor = .white
-        button.addTarget(self, action: #selector(dismissAnimate), for: .touchUpInside)
-        return button
-    }()
-    
-    private var transparentView: UIView = {
-        let view = UIView()
-        view.backgroundColor = .black
-        view.alpha = 0
-        view.frame = UIScreen.main.bounds
-        return view
     }()
     
     
@@ -71,7 +59,6 @@ final class ProfileViewController: UIViewController {
     
     private func setViews() {
         view.addSubview(tableView)
-        view.addSubview(transparentView)
         NSLayoutConstraint.activate([
             tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             tableView.leftAnchor.constraint(equalTo: view.leftAnchor),
@@ -82,52 +69,6 @@ final class ProfileViewController: UIViewController {
     
     private func setBackgroundcolor() {
         view.backgroundColor = .systemBackground
-    }
-    
-    private func showAnimate(image: UIImageView) {
-        UIImageView.animate(withDuration: 0.5,
-                            delay: 0.1
-        ) { [self] in
-            transparentView.alpha = 1
-            image.layer.borderWidth = 0
-            image.layer.cornerRadius = 0
-            transparentView.addSubview(image)
-            transparentView.layer.bounds = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.width)
-            image.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.width)
-            image.center = transparentView.center
-            image.alpha = 1
-            tabBarController?.tabBar.frame.origin.y = UIScreen.main.bounds.height
-            self.view.layoutIfNeeded()
-            self.updateViewConstraints()
-        }
-    completion: { _ in
-        UIView.animate(withDuration: 0.5) { [weak self] in
-            self?.xButton.removeFromSuperview()
-        }
-    }
-    }
-    
-    // MARK: - Action
-    
-    @objc
-    private func dismissAnimate() {
-        UIView.animate(withDuration: 0.3) { [self] in
-            xButton.alpha = 0
-        } completion: { _ in
-            UIView.animate(withDuration: 0.3
-                           //                           usingSpringWithDamping: 0.5,
-                           //                           initialSpringVelocity: 1,
-                           //                           options: .curveEaseInOut
-                           
-            ) { [self] in
-                transparentView.alpha = 0
-                self.view.layoutIfNeeded()
-                self.view.updateConstraints()
-//                if let bar = tabBar {
-//                    bar.frame.origin.y = UIScreen.main.bounds.height - bar.frame.height
-//                }
-            }
-        }
     }
 }
 
@@ -150,7 +91,13 @@ extension ProfileViewController: UITableViewDataSource {
             return cell
         } else {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "post", for: indexPath) as? PostTableViewCell else { return UITableViewCell() }
-            cell.configPost(post: model[indexPath.row])
+           
+            if let likesByIndex = likesDict[indexPath] {
+                cell.likes = likesByIndex
+            }
+        
+            cell.configPost(post: model[indexPath.row], indexPath: indexPath)
+            cell.addLikesHandler = likesHandler
             return cell
         }
     }
@@ -189,10 +136,11 @@ extension ProfileViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section != 0 {
             let cell = tableView.cellForRow(at: indexPath) as! PostTableViewCell
-            let vc = UINavigationController(rootViewController: DetailPostViewController(model: MockModel.post[indexPath.row],
-                                                                                         views: cell.views, handler: { result in
-                cell.views += result
-            }))
+            let vc = UINavigationController(rootViewController: DetailPostViewController(model: model[indexPath.row],
+                                                                                         likes: cell.likes) {
+                cell.views += 1
+                self.model[indexPath.row].views += 1
+            })
             navigationController?.present(vc, animated: true)
         }
     }
@@ -200,16 +148,7 @@ extension ProfileViewController: UITableViewDelegate {
 
 extension ProfileViewController: ArrowDidTapDelegate {
     func arrowDidTap() {
-        let vc = PhotosViewController(images: MockModel.photos)
+        let vc = PhotosViewController(images: Model.photos)
         navigationController?.pushViewController(vc, animated: true)
     }
 }
-
-//extension ProfileViewController: CustomHeaderDelegate {
-//    func didTapImage(_ image: UIImage?, imageRect: CGRect) {
-//
-//        let rect = header.frame
-//        let currentHeaderRect = tableView.convert(rect, to: view)
-//        initialImageRect = CGRect
-//    }
-    

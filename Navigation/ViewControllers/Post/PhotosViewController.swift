@@ -36,6 +36,32 @@ final class PhotosViewController: UIViewController {
         return collectionView
     }()
     
+    private lazy var fullScreenImage: UIImageView = {
+        let photo = UIImageView()
+        photo.clipsToBounds = true
+        photo.contentMode = .scaleAspectFill
+        photo.alpha = 0.0
+        return photo
+    }()
+    
+    private lazy var crossButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(systemName: "xmark"), for: .normal)
+        button.alpha = 0
+        button.tintColor = .white
+        button.addTarget(self, action: #selector(closeImageAction), for: .touchUpInside)
+        return button
+    }()
+    
+    private var transparentBlackView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .black
+        view.alpha = 0
+        view.frame = UIScreen.main.bounds
+        return view
+    }()
+    
+    
     override func loadView() {
         super.loadView()
         navigationItem.title = "Gallery"
@@ -66,12 +92,30 @@ extension PhotosViewController {
     
     private func setView() {
         view.addSubview(collectionView)
+        view.addSubview(transparentBlackView)
+        view.addSubview(fullScreenImage)
+        view.addSubview(crossButton)
+        view.subviews.forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
         
         NSLayoutConstraint.activate([
             collectionView.leftAnchor.constraint(equalTo: view.leftAnchor),
             collectionView.rightAnchor.constraint(equalTo: view.rightAnchor),
             collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            
+            fullScreenImage.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width),
+            fullScreenImage.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.width),
+            fullScreenImage.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            fullScreenImage.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            
+            transparentBlackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            transparentBlackView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            transparentBlackView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            transparentBlackView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            
+            crossButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: Padding.inset),
+            crossButton.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -Padding.inset),
+            crossButton.heightAnchor.constraint(equalToConstant: 50)
         ])
     }
 }
@@ -103,5 +147,22 @@ extension PhotosViewController: UICollectionViewDataSource, UICollectionViewDele
                       height: 100)
     }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        fullScreenImage.image = UIImage(named: Model.photoGallery[indexPath.row])
+        
+        UIView.animate(withDuration: 0.5) { [self] in
+            fullScreenImage.alpha = 1
+            crossButton.alpha = 1
+            transparentBlackView.alpha = 0.7
+        }
+    }
     
+    @objc func closeImageAction(){
+        UIView.animate(withDuration: 1) { [self] in
+            fullScreenImage.alpha = 0
+            transparentBlackView.alpha = 0
+            crossButton.alpha = 0
+        }
+    }
 }

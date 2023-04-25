@@ -9,9 +9,23 @@ import UIKit
 
 final class PostTableViewCell: UITableViewCell {
     
+    // MARK: - Closure
+    
+    var addLikesHandler: ((IndexPath) -> Void)?
+    
+    // MARK: - Properties
+    
+    var indexPath: IndexPath?
+    
+    var likes: Int = 0 {
+        didSet {
+            likesLabel.text = "Likes: \(likes)"
+        }
+    }
+
     var views: Int = 0 {
         didSet {
-            cellViews.text = "Views: \(views)"
+            viewLabel.text = "Views: \(views)"
         }
     }
     
@@ -38,20 +52,24 @@ final class PostTableViewCell: UITableViewCell {
         return cellImage
     }()
     
-    private lazy var cellLikes: UILabel = {
-        let cellLikes = UILabel()
-        cellLikes.font = .systemFont(ofSize: 16)
-        cellLikes.textColor = .black
-        cellLikes.isUserInteractionEnabled = true
-        return cellLikes
+    private lazy var likesLabel: UILabel = {
+        let likesLabel = UILabel()
+        likesLabel.font = .systemFont(ofSize: 16)
+        likesLabel.textColor = .black
+        likesLabel.text = "Likes: 0"
+        likesLabel.isUserInteractionEnabled = true
+        likesLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(addLikes)))
+        return likesLabel
     }()
     
-    private lazy var cellViews: UILabel = {
-        let cellViews = UILabel()
-        cellViews.font = .systemFont(ofSize: 16)
-        cellViews.textColor = .black
-        return cellViews
+    private lazy var viewLabel: UILabel = {
+        let viewLabel = UILabel()
+        viewLabel.font = .systemFont(ofSize: 16)
+        viewLabel.textColor = .black
+        return viewLabel
     }()
+    
+    // MARK: - Init
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -63,20 +81,39 @@ final class PostTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - Configure
+    
+    func configPost(post: Post, indexPath: IndexPath) {
+        cellAuthor.text = post.author
+        cellImage.image = UIImage(named: post.image)
+        cellDescription.text = post.description
+        viewLabel.text = "Views: \(post.views)"
+        self.indexPath = indexPath
+    }
+    
+    // MARK: - Action
+    
+    @objc
+    private func addLikes() {
+        addLikesHandler?(indexPath ?? [0, 0])
+    }
+    
+    // MARK: - Instance methods
+    
     func makeViews(view: Int) {
-        self.cellViews.text = "Views: \(view)"
+        self.viewLabel.text = "Views: \(view)"
     }
     
     private func addSubviews() {
         contentView.addSubview(cellAuthor)
         contentView.addSubview(cellImage)
         contentView.addSubview(cellDescription)
-        contentView.addSubview(cellLikes)
-        contentView.addSubview(cellViews)
+        contentView.addSubview(likesLabel)
+        contentView.addSubview(viewLabel)
     }
     
     private func setConstraints() {
-        [cellAuthor, cellImage, cellDescription, cellLikes, cellViews].forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
+        [cellAuthor, cellImage, cellDescription, likesLabel, viewLabel].forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
         
         NSLayoutConstraint.activate([
             
@@ -93,20 +130,11 @@ final class PostTableViewCell: UITableViewCell {
             cellDescription.leftAnchor.constraint(equalTo: cellAuthor.leftAnchor),
             cellDescription.rightAnchor.constraint(equalTo: cellAuthor.rightAnchor),
             
-            cellLikes.topAnchor.constraint(equalTo: cellDescription.bottomAnchor, constant: Padding.inset),
-            cellLikes.leftAnchor.constraint(equalTo: cellAuthor.leftAnchor),
+            likesLabel.topAnchor.constraint(equalTo: cellDescription.bottomAnchor, constant: Padding.inset),
+            likesLabel.leftAnchor.constraint(equalTo: cellAuthor.leftAnchor),
             
-            cellViews.topAnchor.constraint(equalTo: cellLikes.topAnchor),
-            cellViews.rightAnchor.constraint(equalTo: cellAuthor.rightAnchor),
-            cellViews.bottomAnchor.constraint(equalTo: contentView.bottomAnchor,  constant: -Padding.inset)])
-    }
-    
-    func configPost(post: Post) {
-        
-        cellAuthor.text = post.author
-        cellImage.image = UIImage(named: post.image)
-        cellDescription.text = post.description
-        cellLikes.text = "Likes: \(post.likes)"
-        cellViews.text = "Views: \(post.views)"
+            viewLabel.topAnchor.constraint(equalTo: likesLabel.topAnchor),
+            viewLabel.rightAnchor.constraint(equalTo: cellAuthor.rightAnchor),
+            viewLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor,  constant: -Padding.inset)])
     }
 }

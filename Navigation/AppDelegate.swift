@@ -14,7 +14,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
-        let logInViewController = LogInViewController()
         let tabBarController = UITabBarController()
         let feedNavigationController = UINavigationController(rootViewController: FeedViewController())
         let profileNavigationController = UINavigationController(rootViewController: LogInViewController())
@@ -22,7 +21,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         tabBarController.viewControllers = [feedNavigationController, profileNavigationController]
         
         let appearance = UITabBarAppearance()
-        appearance.backgroundColor = .green
+        appearance.backgroundColor = .systemGray3
         tabBarController.tabBar.standardAppearance = appearance
         tabBarController.tabBar.scrollEdgeAppearance = appearance
         

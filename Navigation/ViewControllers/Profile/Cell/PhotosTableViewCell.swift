@@ -53,6 +53,7 @@ final class PhotosTableViewCell: UITableViewCell {
         return collectionView
     }()
     
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         addSubviews()
@@ -85,6 +86,7 @@ final class PhotosTableViewCell: UITableViewCell {
         ])
     }
     
+    
     @objc
     private func arrowAction() {
         arrowDidTapDelegate?.arrowDidTap()
@@ -96,12 +98,12 @@ extension PhotosTableViewCell: UICollectionViewDataSource {
     // MARK: - UICollectionViewDataSource methods
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        MockModel.photos.count
+        Model.photos.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "photo", for: indexPath) as! PhotoCollectionViewCell
-        cell.configure(image:  MockModel.photos[indexPath.item] ?? UIImage())
+        cell.configure(image: Model.photos[indexPath.item] ?? UIImage())
         return cell
     }
 }
@@ -112,7 +114,7 @@ extension PhotosTableViewCell: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        let viewController = SelectedPhotoViewController(image: MockModel.photos[indexPath.row + 1] ?? UIImage())
+        let viewController = SelectedPhotoViewController(image: Model.photos[indexPath.row + 1] ?? UIImage())
         viewController.name = String(indexPath.row + 1)
         
         let cell = collectionView.cellForItem(at: indexPath) as! PhotoCollectionViewCell

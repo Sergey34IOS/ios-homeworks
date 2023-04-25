@@ -9,12 +9,16 @@ import UIKit
 
 final class DetailPostViewController: UIViewController {
     
+    // MARK: - Closure
+    
+    var viewsHandler: (() -> Void)?
+    
     // MARK: - Properties
     
-    private lazy var myImage: UIImageView = {
-        var myImage = UIImageView()
-        myImage.contentMode = .scaleAspectFill
-        return myImage
+    private lazy var postImageView: UIImageView = {
+        var image = UIImageView()
+        image.contentMode = .scaleAspectFill
+        return image
     }()
     
     private lazy var descriptionLabel: UILabel = {
@@ -23,17 +27,33 @@ final class DetailPostViewController: UIViewController {
         return descriptionLabel
     }()
     
-    private let likesViewsView: LikesViewsView = {
-        var likesViewsView = LikesViewsView()
-        return likesViewsView
+    private lazy var likesLabel: UILabel = {
+        let likes = UILabel()
+        likes.textColor = .black
+        likes.font = UIFont.systemFont(ofSize: 16)
+        likes.numberOfLines = 0
+        likes.clipsToBounds = true
+        likes.layer.masksToBounds = true
+        return likes
+    }()
+    
+    private lazy var viewsLabel: UILabel = {
+        let views = UILabel()
+        views.clipsToBounds = true
+        views.layer.masksToBounds = true
+        views.textColor = .black
+        views.font = UIFont.systemFont(ofSize: 16)
+        views.numberOfLines = 0
+        views.translatesAutoresizingMaskIntoConstraints = false
+        return views
     }()
     
     // MARK: - Lifecycle
     
-    init(model: Post, views: Int, handler: @escaping (Int) -> Void) {
+    init(model: Post, likes: Int, viewsHandler: @escaping () -> Void) {
         super.init(nibName: nil, bundle: nil)
-        handler(1)
-        setModel(model: model, views: views)
+        setModel(model: model, likes: likes)
+        self.viewsHandler = viewsHandler
     }
     
     @available(*, unavailable)
@@ -41,10 +61,14 @@ final class DetailPostViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func loadView() {
-        super.loadView()
+    override func viewDidLoad() {
+        super.viewDidLoad()
         view.backgroundColor = .white
         setViews()
+    }
+    
+    deinit {
+        viewsHandler?()
     }
 }
 
@@ -52,32 +76,34 @@ extension DetailPostViewController {
     
     // MARK: - Instance methods
     
-    private func setModel(model: Post, views: Int) {
+    private func setModel(model: Post, likes: Int) {
         self.title = model.author
-        self.myImage.image = UIImage(named: model.image)
+        self.postImageView.image = UIImage(named: model.image)
         self.descriptionLabel.text = model.description
-        self.likesViewsView.views = views
+        self.likesLabel.text = "Likes: \(likes)"
+        self.viewsLabel.text = "Views: \(model.views)"
     }
     
     private func setViews() {
-        view.addSubviews([myImage, descriptionLabel, likesViewsView])
+        view.addSubviews([postImageView, descriptionLabel, likesLabel, viewsLabel])
         
-        [myImage, descriptionLabel, likesViewsView].forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
+        [postImageView, descriptionLabel, viewsLabel, likesLabel].forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
         
         NSLayoutConstraint.activate([
-            myImage.leftAnchor.constraint(equalTo: view.leftAnchor),
-            myImage.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            myImage.rightAnchor.constraint(equalTo: view.rightAnchor),
-            myImage.heightAnchor.constraint(equalToConstant: 400),
+            postImageView.leftAnchor.constraint(equalTo: view.leftAnchor),
+            postImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            postImageView.rightAnchor.constraint(equalTo: view.rightAnchor),
+            postImageView.heightAnchor.constraint(equalToConstant: 400),
             
             descriptionLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: Padding.inset),
-            descriptionLabel.topAnchor.constraint(equalTo: myImage.bottomAnchor, constant: Padding.inset),
+            descriptionLabel.topAnchor.constraint(equalTo: postImageView.bottomAnchor, constant: Padding.inset),
             descriptionLabel.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -Padding.inset),
             
-            likesViewsView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: Padding.inset),
-            likesViewsView.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: Padding.inset),
-            likesViewsView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -Padding.inset),
-            likesViewsView.heightAnchor.constraint(equalToConstant: 20)
+            likesLabel.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: Padding.inset),
+            likesLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: Padding.inset),
+            
+            viewsLabel.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: Padding.inset),
+            viewsLabel.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -Padding.inset),
         ])
     }
 }

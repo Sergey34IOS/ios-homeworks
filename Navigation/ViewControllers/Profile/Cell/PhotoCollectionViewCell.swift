@@ -1,4 +1,4 @@
-//
+ //
 //  PhotosCollectionViewCell.swift
 //  Navigation
 //
@@ -10,7 +10,7 @@ import UIKit
 final class PhotoCollectionViewCell: UICollectionViewCell {
     
     // MARK: - Properties
-       
+    
     lazy var image: UIImageView = {
         var image = UIImageView()
         image.clipsToBounds = true
@@ -37,32 +37,6 @@ final class PhotoCollectionViewCell: UICollectionViewCell {
     
     func configure(image: UIImage) {
         self.image.image = image
-    }
-    
-    // MARK: - Action
-//    @objc
-//    private func showPhoto() {
-//        UIImageView.animate(withDuration: 0.5,
-//                            delay: 0.1
-//        ) { [self] in
-//            transparentView.alpha = 0.5
-//            image.layer.borderWidth = 0
-//            image.layer.cornerRadius = 0
-//            image.center = transparentView.center
-//            image.layer.bounds = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.width)
-////            tabBar?.frame.origin.y = UIScreen.main.bounds.height
-//        }
-//    completion: { _ in
-//        UIView.animate(withDuration: 0.5) { [weak self] in
-//            self?.xButton.alpha = 1
-//        }
-//    }
-//    }
-    
-    
-    @objc
-    private func closePhotoAction() {
-        
     }
 }
 
