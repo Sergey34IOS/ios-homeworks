@@ -13,21 +13,18 @@ final class DetailPostViewController: UIViewController {
     
     private lazy var myImage: UIImageView = {
         var myImage = UIImageView()
-        myImage.translatesAutoresizingMaskIntoConstraints = false
         myImage.contentMode = .scaleAspectFill
         return myImage
     }()
     
     private lazy var descriptionLabel: UILabel = {
         var descriptionLabel = UILabel()
-        descriptionLabel.translatesAutoresizingMaskIntoConstraints = false
         descriptionLabel.numberOfLines = 0
         return descriptionLabel
     }()
     
     private let likesViewsView: LikesViewsView = {
         var likesViewsView = LikesViewsView()
-        likesViewsView.translatesAutoresizingMaskIntoConstraints = false
         return likesViewsView
     }()
     
@@ -64,6 +61,8 @@ extension DetailPostViewController {
     
     private func setViews() {
         view.addSubviews([myImage, descriptionLabel, likesViewsView])
+        
+        [myImage, descriptionLabel, likesViewsView].forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
         
         NSLayoutConstraint.activate([
             myImage.leftAnchor.constraint(equalTo: view.leftAnchor),

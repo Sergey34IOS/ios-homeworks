@@ -88,6 +88,7 @@ extension PhotosViewController: UICollectionViewDataSource, UICollectionViewDele
         return cell
     }
     
+    
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         let header = collectionView.dequeueReusableSupplementaryView(
             ofKind: UICollectionView.elementKindSectionHeader,
@@ -101,4 +102,6 @@ extension PhotosViewController: UICollectionViewDataSource, UICollectionViewDele
         return CGSize(width: view.frame.size.width,
                       height: 100)
     }
+    
+    
 }

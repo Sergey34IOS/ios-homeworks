@@ -13,6 +13,10 @@ protocol ArrowDidTapDelegate: AnyObject {
 
 final class PhotosTableViewCell: UITableViewCell {
     
+    // MARK: - Closure
+    
+    var closure: ((UIImageView) -> Void)?
+    
     // MARK: - Properties
     
     weak var arrowDidTapDelegate: ArrowDidTapDelegate?
@@ -111,10 +115,8 @@ extension PhotosTableViewCell: UICollectionViewDelegateFlowLayout {
         let viewController = SelectedPhotoViewController(image: MockModel.photos[indexPath.row + 1] ?? UIImage())
         viewController.name = String(indexPath.row + 1)
         
-        if let tableView = superview as? UITableView {
-            if let vc = tableView.dataSource as? UIViewController {
-                vc.navigationController?.pushViewController(viewController, animated: true)
-            }
-        }
+        let cell = collectionView.cellForItem(at: indexPath) as! PhotoCollectionViewCell
+        let image = cell.image
+        closure?(image)
     }
 }

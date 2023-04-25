@@ -21,24 +21,25 @@ final class ProfileHeaderView: UIView {
         catImage.layer.borderColor = UIColor.white.cgColor
         catImage.isUserInteractionEnabled = true
         catImage.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tapImageAction)))
-        catImage.translatesAutoresizingMaskIntoConstraints = false
         return catImage
     }()
     
-    private var transparentView: UIView = {
-        let view = UIView(frame: CGRect(x: 0, y: -100, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
-        view.backgroundColor = .black
-        view.alpha = 0
-        return view
-    }()
     
     private lazy var xButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(systemName: "xmark"), for: .normal)
-        button.alpha = 0.5
+        button.alpha = 0
         button.tintColor = .white
         button.addTarget(self, action: #selector(closeAvatar), for: .touchUpInside)
         return button
+    }()
+    
+    private var transparentView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .black
+        view.alpha = 0
+        view.frame = UIScreen.main.bounds
+        return view
     }()
     
     private var nameLabel: UILabel = {
@@ -76,7 +77,7 @@ final class ProfileHeaderView: UIView {
     private var statusButton: UIButton = {
         var statusButton = UIButton()
         statusButton.layer.cornerRadius = 12
-        statusButton.backgroundColor = UIColor(named: "custom_blue_color")
+        statusButton.backgroundColor = UIColor(named: "customBlue")
         statusButton.setTitle("Set status", for: .normal)
         statusButton.setTitleColor(.white, for: .normal)
         
@@ -137,13 +138,9 @@ final class ProfileHeaderView: UIView {
     @objc
     private func closeAvatar() {
         UIView.animate(withDuration: 0.3) { [self] in
-            xButton.alpha = 0
+            xButton.removeFromSuperview()
         } completion: { _ in
             UIView.animate(withDuration: 0.3
-                           //                           usingSpringWithDamping: 0.5,
-                           //                           initialSpringVelocity: 1,
-                           //                           options: .curveEaseInOut
-                           
             ) { [self] in
                 transparentView.alpha = 0
                 catImage.layer.borderWidth = 3
@@ -152,7 +149,6 @@ final class ProfileHeaderView: UIView {
                 catImage.center = avatarCenter
                 catImage.bounds = avatarBounds
                 self.setNeedsLayout()
-                //                self.layoutIfNeeded()
                 self.updateConstraints()
                 if let bar = tabBar {
                     bar.frame.origin.y = UIScreen.main.bounds.height - bar.frame.height
@@ -174,11 +170,23 @@ final class ProfileHeaderView: UIView {
         statusTextField.placeholder = "Enter status..."
         
         if statusText == "" {
+            shakeTextField()
             statusLabel.text = "Print something..."
             statusTextField.placeholder = "Enter status..."
         }
     }
     
+    private func shakeTextField() {
+        let animation = CABasicAnimation(keyPath: "position")
+        animation.duration = 0.1
+        animation.repeatCount = 2
+        animation.autoreverses = true
+        animation.fromValue = NSValue(cgPoint: CGPoint(x: statusTextField.center.x - 10, y: statusTextField.center.y))
+        animation.toValue = NSValue(cgPoint: CGPoint(x: statusTextField.center.x + 10, y: statusTextField.center.y))
+        
+        statusTextField.layer.add(animation, forKey: "position")
+    }
+
     @objc
     private func endEditingView() {
         self.endEditing(true)
@@ -217,13 +225,13 @@ extension ProfileHeaderView {
     
     private func addConstraints() {
         
-        [xButton, catImage, nameLabel, statusButton, statusLabel, statusTextField].forEach {
+        [xButton, catImage, nameLabel, statusButton, statusLabel, statusTextField, transparentView].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
         }
         
         NSLayoutConstraint.activate([
-            catImage.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 16),
-            catImage.leftAnchor.constraint(equalTo: leftAnchor, constant: 16),
+            catImage.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: Padding.inset),
+            catImage.leftAnchor.constraint(equalTo: leftAnchor, constant: Padding.inset),
             catImage.heightAnchor.constraint(equalToConstant: 130),
             catImage.widthAnchor.constraint(equalToConstant: 130),
             
@@ -238,14 +246,14 @@ extension ProfileHeaderView {
             statusTextField.heightAnchor.constraint(equalToConstant: 40),
             statusTextField.rightAnchor.constraint(equalTo: statusButton.rightAnchor),
             
-            statusButton.topAnchor.constraint(equalTo: statusTextField.bottomAnchor, constant: 16),
-            statusButton.leftAnchor.constraint(equalTo: leftAnchor, constant: 16),
-            statusButton.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -16),
+            statusButton.topAnchor.constraint(equalTo: statusTextField.bottomAnchor, constant: Padding.inset),
+            statusButton.leftAnchor.constraint(equalTo: leftAnchor, constant: Padding.inset),
+            statusButton.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -Padding.inset),
             statusButton.heightAnchor.constraint(equalToConstant: 50),
             statusButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -5),
             
-            xButton.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 16),
-            xButton.rightAnchor.constraint(equalTo: statusButton.rightAnchor, constant: -16),
+            xButton.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: Padding.inset),
+            xButton.rightAnchor.constraint(equalTo: statusButton.rightAnchor, constant: -Padding.inset),
             xButton.heightAnchor.constraint(equalToConstant: 50)
         ])
     }
